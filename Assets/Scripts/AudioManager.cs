@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
         // Change this if loading more audio
         int numAudio = 7;
 
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
         }
 
