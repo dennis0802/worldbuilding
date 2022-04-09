@@ -1,4 +1,4 @@
-# worldbuilding
+# Worldbuilding
 Experimenting with Unity's terrain tools to create a world
 
 Assets used:
