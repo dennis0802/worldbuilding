@@ -9,20 +9,17 @@ public class MainMenu : MonoBehaviour{
     // NOTE: According to build index settings on the project
     // 0 = splash screen
     // 1 = menu
-    // 2 = level1
-    // 3 = level2
-    // 4 = level3
-    // 5 = completion
-    // 6 = instructions
+    // 2 = splash screen
+    // 3 = start off at the Spirit Maple
 
     public void Play(){
         AudioManager.buttonClick.Play();
-        SceneManager.LoadScene(2);
+        Debug.Log("Currently unavailable. Projected entry date April 10, 2022. Projected finished date is Dec 31, 2022");
     }
 
     public void Controls(){
         AudioManager.buttonClick.Play();
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(2);
     }
 
     public void ReturnToMenu(){
