@@ -22,13 +22,13 @@ public class AudioManager : MonoBehaviour
 
     // Prepare all audio to be used in the program
     void LoadAudio(){
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
-        gameObject.AddComponent<AudioSource>();
+        // Change this if loading more audio
+        int numAudio = 7;
+
+        for(int i = 0; i < 7; i++){
+            gameObject.AddComponent<AudioSource>();
+        }
+
         audioList = gameObject.GetComponents<AudioSource>();
         audioList[0].clip = (AudioClip)Resources.Load("Audio/buttonClick");
         audioList[1].clip = (AudioClip)Resources.Load("Audio/track_shortadventure_loop");
