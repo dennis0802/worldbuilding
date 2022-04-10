@@ -14,7 +14,8 @@ public class MainMenu : MonoBehaviour{
 
     public void Play(){
         AudioManager.buttonClick.Play();
-        Debug.Log("Currently unavailable. Projected entry date April 10, 2022. Projected finished date is Dec 31, 2022");
+        SceneManager.LoadScene(3);
+        Debug.Log("Projected finished date is Dec 31, 2022");
     }
 
     public void Controls(){

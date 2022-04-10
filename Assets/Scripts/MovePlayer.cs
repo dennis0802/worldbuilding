@@ -15,7 +15,7 @@ public class MovePlayer : MonoBehaviour
     private static MovePlayer instance;
     private bool groundedPlayer, isRunning;
     [SerializeField]
-    private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 5.0f, forceMagnitude = 1.0f;
+    private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, forceMagnitude = 1.0f;
     private int coins = 0, deaths = 0;
     private float timer = 0.0f;
 
