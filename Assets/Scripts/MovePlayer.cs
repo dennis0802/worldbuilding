@@ -13,11 +13,17 @@ public class MovePlayer : MonoBehaviour
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
+    private Animator animator;
+    private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, floatAnimation, fallAnimation;
+    private Vector2 currentAnimationBlendVector;
+    private Vector2 animationVelocity;
     private bool groundedPlayer, isRunning;
     [SerializeField]
-    private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, forceMagnitude = 1.0f;
+    private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
+                  forceMagnitude = 1.0f, animationSmoothTime = 0.1f, animationPlayTransition = 0.15f;
     private int coins = 0, deaths = 0;
     private float timer = 0.0f;
+    
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
     // Running feature based off of: https://www.youtube.com/watch?v=UqLl53ZPNfo
@@ -29,12 +35,15 @@ public class MovePlayer : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         runStart = playerInput.actions["RunStart"];
         runFinish = playerInput.actions["RunEnd"];
-        PlayerPrefs.SetInt("Coins", coins);
-        PlayerPrefs.SetInt("Deaths", deaths);
-        PlayerPrefs.SetFloat("Time", timer);
-
         runStart.performed += x => PressSprint();
         runFinish.performed += x => ReleaseSprint();
+        animator = GetComponentInChildren<Animator>();
+        moveXAnimationParameterId = Animator.StringToHash("MoveX");
+        moveZAnimationParameterId = Animator.StringToHash("MoveZ");
+        //basicAnimation = Animator.StringToHash("Basic Movement");
+        jumpAnimation = Animator.StringToHash("Jump");
+        floatAnimation = Animator.StringToHash("Float");
+        fallAnimation = Animator.StringToHash("Fall");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -56,16 +65,29 @@ public class MovePlayer : MonoBehaviour
 
         // Movement dependent on camera's rotation
         Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 move = new Vector3(input.x, 0, input.y);
+        currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationVelocity, animationSmoothTime);
+
+        Vector3 move = new Vector3(currentAnimationBlendVector.x, 0, currentAnimationBlendVector.y);
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0.0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
+        // Animation
+        animator.SetFloat(moveXAnimationParameterId, currentAnimationBlendVector.x);
+        animator.SetFloat(moveZAnimationParameterId, currentAnimationBlendVector.y);
+
         // Jumping
         if(jumpAction.triggered && groundedPlayer){
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            animator.CrossFade(jumpAnimation, animationPlayTransition);
             AudioManager.jump.Play();
+            animator.CrossFade(floatAnimation, animationPlayTransition);
         }
+
+        if(!groundedPlayer && playerVelocity.y < 0){
+            animator.CrossFade(fallAnimation, animationPlayTransition);
+        }
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 

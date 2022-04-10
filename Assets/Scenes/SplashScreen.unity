@@ -639,9 +639,33 @@ PrefabInstance:
       propertyPath: field of view
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99912417
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.02860583
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.030525569
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00087397464
+      objectReference: {fileID: 0}
     - target: {fileID: 4243849060395376835, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_CollideAgainst.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060431569925, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_AmplitudeGain
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060431569925, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_FrequencyGain
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
