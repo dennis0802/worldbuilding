@@ -99,6 +99,15 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other){
+        if(other.gameObject.CompareTag("TransitionTest")){
+            controller.enabled = false;
+            transform.position = new Vector3(0,0,0);
+            AudioManager.complete.Play();
+            controller.enabled = true;
+        }
+    }
+
     void Awake(){
         // Check for an existing player that has this script attached
         if(instance == null){
