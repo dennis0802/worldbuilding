@@ -54,6 +54,9 @@ public class MovePlayer : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
+        else if(!groundedPlayer && playerVelocity.y < 0){
+            animator.CrossFade(fallAnimation, animationPlayTransition-0.12f);
+        }
 
         if(isRunning){
             playerSpeed = 4.0f;
