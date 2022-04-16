@@ -81,7 +81,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.91, z: 0}
 --- !u!114 &7579379511529831722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   rotationSpeed: 5
   forceMagnitude: 1
   animationSmoothTime: 0.1
+  animationPlayTransition: 0.15
 --- !u!1001 &6098611350915205362
 PrefabInstance:
   m_ObjectHideFlags: 0

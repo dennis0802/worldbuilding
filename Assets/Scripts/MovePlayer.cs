@@ -8,22 +8,18 @@ public class MovePlayer : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private Vector2 inputVec;
+    private Vector2 inputVec, currentAnimationBlendVector, animationVelocity;
     private InputAction moveAction, jumpAction, runStart, runFinish;
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
-    private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, floatAnimation, fallAnimation;
-    private Vector2 currentAnimationBlendVector;
-    private Vector2 animationVelocity;
+    private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
+                runAnimation, basicAnimation;
     private bool groundedPlayer, isRunning;
     [SerializeField]
     private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
-                  forceMagnitude = 1.0f, animationSmoothTime = 0.1f, animationPlayTransition = 0.15f;
-    private int coins = 0, deaths = 0;
-    private float timer = 0.0f;
-    
+                  animationSmoothTime = 0.1f, animationPlayTransition = 0.15f;
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
     // Running feature based off of: https://www.youtube.com/watch?v=UqLl53ZPNfo
@@ -40,10 +36,11 @@ public class MovePlayer : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         moveXAnimationParameterId = Animator.StringToHash("MoveX");
         moveZAnimationParameterId = Animator.StringToHash("MoveZ");
-        //basicAnimation = Animator.StringToHash("Basic Movement");
+        basicAnimation = Animator.StringToHash("Basic Movement");
         jumpAnimation = Animator.StringToHash("Jump");
-        floatAnimation = Animator.StringToHash("Float");
-        fallAnimation = Animator.StringToHash("Fall");
+        landAnimation = Animator.StringToHash("Land");
+        fallAnimation = Animator.StringToHash("Falling");
+        runAnimation = Animator.StringToHash("Running");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -51,6 +48,8 @@ public class MovePlayer : MonoBehaviour
     void Update(){
         // Ground check
         groundedPlayer = controller.isGrounded;
+        animator.SetBool("IsGrounded", groundedPlayer);
+
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
@@ -81,11 +80,6 @@ public class MovePlayer : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             animator.CrossFade(jumpAnimation, animationPlayTransition);
             AudioManager.jump.Play();
-            animator.CrossFade(floatAnimation, animationPlayTransition);
-        }
-
-        if(!groundedPlayer && playerVelocity.y < 0){
-            animator.CrossFade(fallAnimation, animationPlayTransition);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -99,65 +93,6 @@ public class MovePlayer : MonoBehaviour
         if(transform.position.y < -10){
             AudioManager.fall.Play();
             transform.position = new Vector3(0, 5, 0);
-            deaths++;
-        }
-
-        // Falling out of boudns (level 3)
-        if(transform.position.y < -10 && SceneManager.GetActiveScene().buildIndex == 4){
-            AudioManager.fall.Play();
-            transform.position = new Vector3(525, 5, 348);
-            deaths++;
-        }
-
-        timer += Time.deltaTime;
-    }
- 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Rigidbody rigidbody = hit.collider.attachedRigidbody;
-        if(rigidbody != null)
-        {
-            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
-            forceDirection.y = 0;
-            forceDirection.Normalize();
-            rigidbody.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
-        }
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Coin")
-        {
-            AudioManager.coinCollect.Play();
-            Debug.Log("Coin collected");
-            coins++;
-            col.gameObject.SetActive(false);
-        }
-        if (col.gameObject.tag == "End")
-        {
-            AudioManager.complete.Play();
-
-            // Character controller overrides transform changes, temporarily disable to allow change in position
-            // Check if user is approaching level 3 or cleared level 4
-            if(SceneManager.GetActiveScene().buildIndex < 3){
-                controller.enabled = false;
-                gameObject.transform.position = new Vector3(0, 1, 0);
-                controller.enabled = true;
-            }
-            else if(SceneManager.GetActiveScene().buildIndex == 3){
-                controller.enabled = false;
-                gameObject.transform.position = new Vector3(525, 1, 348);
-                controller.enabled = true;
-            }
-            else if(SceneManager.GetActiveScene().buildIndex == 4){
-                // Save stats as player prefs for stat screen to use
-                PlayerPrefs.SetInt("Coins", coins);
-                PlayerPrefs.SetInt("Deaths", deaths);
-                PlayerPrefs.SetFloat("Time", timer);
-                Cursor.lockState = CursorLockMode.None;
-                Destroy(gameObject);
-            }
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
@@ -174,9 +109,11 @@ public class MovePlayer : MonoBehaviour
 
     void PressSprint(){
         isRunning = true;
+        animator.SetBool("IsRunning", isRunning);
     }
 
     void ReleaseSprint(){
         isRunning = false;
+        animator.SetBool("IsRunning", isRunning);
     }
 }
