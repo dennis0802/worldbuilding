@@ -6,12 +6,14 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, coinCollect, complete, breakSound;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, breakSound;
     
     // Start is called before the first frame update
     void Start()
     {
         LoadAudio();
+        bgm.loop = true;
+        bgm.Play();
     }
 
     // Update is called once per frame
@@ -31,10 +33,10 @@ public class AudioManager : MonoBehaviour
 
         audioList = gameObject.GetComponents<AudioSource>();
         audioList[0].clip = (AudioClip)Resources.Load("Audio/buttonClick");
-        audioList[1].clip = (AudioClip)Resources.Load("Audio/track_shortadventure_loop");
+        audioList[1].clip = (AudioClip)Resources.Load("Audio/09 Games with stones");
         audioList[2].clip = (AudioClip)Resources.Load("Audio/jump");
         audioList[3].clip = (AudioClip)Resources.Load("Audio/fall");
-        audioList[4].clip = (AudioClip)Resources.Load("Audio/collectCoin");
+        audioList[4].clip = (AudioClip)Resources.Load("Audio/05 The fairy forest");
         audioList[5].clip = (AudioClip)Resources.Load("Audio/level-completed");
         audioList[6].clip = (AudioClip)Resources.Load("Audio/break");
         
@@ -46,7 +48,7 @@ public class AudioManager : MonoBehaviour
         bgm = gameObject.GetComponents<AudioSource>()[1];
         jump = gameObject.GetComponents<AudioSource>()[2];
         fall = gameObject.GetComponents<AudioSource>()[3];
-        coinCollect = gameObject.GetComponents<AudioSource>()[4];
+        forestBgm = gameObject.GetComponents<AudioSource>()[4];
         complete = gameObject.GetComponents<AudioSource>()[5];
         breakSound = gameObject.GetComponents<AudioSource>()[6];
 
