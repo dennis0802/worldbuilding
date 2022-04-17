@@ -53,6 +53,6 @@ public class AudioManager : MonoBehaviour
         footstep = gameObject.GetComponents<AudioSource>()[6];
 
         // Any required adjustments to audio (volume, tone, etc.)
-        jump.volume = 0.5f;
+        jump.volume = 0.2f;
     }
 }
