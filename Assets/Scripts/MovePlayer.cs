@@ -97,6 +97,10 @@ public class MovePlayer : MonoBehaviour
             AudioManager.fall.Play();
             transform.position = new Vector3(0, 5, 0);
         }
+
+        if(SceneManager.GetActiveScene().buildIndex == 1){
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other){
@@ -109,6 +113,7 @@ public class MovePlayer : MonoBehaviour
     }
 
     void Awake(){
+        Time.timeScale = 1.0f;
         // Check for an existing player that has this script attached
         if(instance == null){
             instance = this;

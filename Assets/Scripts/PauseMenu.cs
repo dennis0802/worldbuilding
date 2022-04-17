@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool IsPaused = false;
     public GameObject pauseMenuUI;
-    public GameObject levelManager;
     private InputAction pauseAction;
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
     private static PauseMenu instance;
     private float timer = 0.0f;
+    [SerializeField]
+    private CinemachineVirtualCamera vcam;
+    private int priorityBoost = 10;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
         pauseAction = playerInput.actions["Pause"];
-        PlayerPrefs.SetFloat("Time", timer);
+        vcam = GameObject.FindWithTag("PauseCamera").GetComponent<CinemachineVirtualCamera>();
     }
 
     // Update is called once per frame
@@ -53,18 +55,24 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1.0f;
         IsPaused = false;
+        vcam.Priority -= priorityBoost; 
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Pause(){
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0.0f;
         IsPaused = true;
+        vcam.Priority += priorityBoost; 
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadMenu(){
+        IsPaused = false;
+        vcam.Priority -= priorityBoost; 
+        pauseMenuUI.SetActive(false);
         AudioManager.buttonClick.Play();
-        Destroy(gameObject);
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame(){

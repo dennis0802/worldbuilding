@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Environment
   - TransitionTest
+  - PauseCamera
   layers:
   - Default
   - TransparentFX

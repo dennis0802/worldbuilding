@@ -11,7 +11,8 @@
                     "id": "7005eb88-3629-46f9-9b58-ad15dfdacfd6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Move",
@@ -19,7 +20,8 @@
                     "id": "7cef5313-bec7-4f7c-9770-bdc63d040fe8",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -27,7 +29,8 @@
                     "id": "3446a859-c4b5-4d72-a700-8e32b16de494",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Switch",
@@ -35,7 +38,8 @@
                     "id": "a469bbb3-654e-40a9-8f34-e2cad6dabee7",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RunStart",
@@ -43,7 +47,8 @@
                     "id": "bc3d1317-8d1d-405e-b47b-b4e91b244ae4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "RunEnd",
@@ -51,21 +56,20 @@
                     "id": "536249aa-1420-48e5-88d9-5819966a80a0",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "69104ee9-1e33-4edc-9a40-4deb6770ac57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "3173437f-63ab-4443-a273-6dcb4fb2a0a4",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "029433ad-2618-46e9-b7f8-ef27df727679",
@@ -162,6 +166,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "RunEnd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3458319-04f3-4f5f-8966-6346e387653d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3173437f-63ab-4443-a273-6dcb4fb2a0a4",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
