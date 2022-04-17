@@ -10,6 +10,7 @@ Assets used:
 * Outdoor Ground Textures by A dog's life software
 * Terrain Sample Asset Pack by Unity
 * The ancient forest of the fairies by Boris Sandor Benesch
+* Action RPG Music Free by VGComposer
 * Footstep sound from https://mixkit.co/free-sound-effects/footsteps/
 
 All images used belong to their respective owners:
