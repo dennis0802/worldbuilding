@@ -13,7 +13,8 @@ public class MovePlayer : MonoBehaviour
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
-    public Animator animator;
+    private Animator animator;
+    private float stepCooldown, stepRate = 0.5f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation;
     private bool groundedPlayer, isRunning;
@@ -48,11 +49,10 @@ public class MovePlayer : MonoBehaviour
     }
 
     void Update(){
-
-
         // Ground check
         groundedPlayer = controller.isGrounded;
         animator.SetBool("IsGrounded", groundedPlayer);
+        stepCooldown -= Time.deltaTime;
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -79,6 +79,17 @@ public class MovePlayer : MonoBehaviour
             move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
             move.y = 0.0f;
             controller.Move(move * Time.deltaTime * playerSpeed);
+
+            if((!Mathf.Approximately(input.x, 0) || !Mathf.Approximately(input.y, 0)) && stepCooldown < 0f && groundedPlayer){
+                AudioManager.footstep.pitch = 1.0f + Random.Range(-0.2f, 0.2f);
+                AudioManager.footstep.PlayOneShot(AudioManager.footstep.clip, 0.4f);
+                if(!isRunning){
+                    stepCooldown = stepRate;
+                }
+                else{
+                    stepCooldown = 0.25f;
+                }
+            }
         }
 
         // Animation

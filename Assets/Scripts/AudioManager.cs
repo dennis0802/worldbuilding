@@ -6,7 +6,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, breakSound;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep;
     
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         audioList[3].clip = (AudioClip)Resources.Load("Audio/fall");
         audioList[4].clip = (AudioClip)Resources.Load("Audio/05 The fairy forest");
         audioList[5].clip = (AudioClip)Resources.Load("Audio/level-completed");
-        audioList[6].clip = (AudioClip)Resources.Load("Audio/break");
+        audioList[6].clip = (AudioClip)Resources.Load("Audio/footstep");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -50,7 +50,7 @@ public class AudioManager : MonoBehaviour
         fall = gameObject.GetComponents<AudioSource>()[3];
         forestBgm = gameObject.GetComponents<AudioSource>()[4];
         complete = gameObject.GetComponents<AudioSource>()[5];
-        breakSound = gameObject.GetComponents<AudioSource>()[6];
+        footstep = gameObject.GetComponents<AudioSource>()[6];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.5f;
