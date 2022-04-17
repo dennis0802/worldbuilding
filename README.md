@@ -10,3 +10,6 @@ Assets used:
 * Outdoor Ground Textures by A dog's life software
 * Terrain Sample Asset Pack by Unity
 * The ancient forest of the fairies by Boris Sandor Benesch
+
+All images used belong to their respective owners:
+* BG Images from Ori and the Blind Forest/Will of the Wisps

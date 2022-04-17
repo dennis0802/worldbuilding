@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     private InputAction pauseAction;
     public PlayerInput playerInput;
     private static PauseMenu instance;
+    private AudioManager audioManager;
     private float timer = 0.0f;
     [SerializeField]
     private CinemachineVirtualCamera vcam;
@@ -72,6 +73,8 @@ public class PauseMenu : MonoBehaviour
         vcam.Priority -= priorityBoost; 
         pauseMenuUI.SetActive(false);
         AudioManager.buttonClick.Play();
+        AudioManager.forestBgm.Stop();
+        AudioManager.bgm.Play();
         SceneManager.LoadScene(1);
     }
 

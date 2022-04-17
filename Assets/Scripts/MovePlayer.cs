@@ -13,7 +13,7 @@ public class MovePlayer : MonoBehaviour
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
-    private Animator animator;
+    public Animator animator;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation;
     private bool groundedPlayer, isRunning;
@@ -137,12 +137,16 @@ public class MovePlayer : MonoBehaviour
     }
 
     void PressSprint(){
-        isRunning = true;
-        animator.SetBool("IsRunning", isRunning);
+        if(animator != null){
+            isRunning = true;
+            animator.SetBool("IsRunning", isRunning);
+        }
     }
 
     void ReleaseSprint(){
-        isRunning = false;
-        animator.SetBool("IsRunning", isRunning);
+        if(animator != null){
+            isRunning = false;
+            animator.SetBool("IsRunning", isRunning);
+        }
     }
 }
