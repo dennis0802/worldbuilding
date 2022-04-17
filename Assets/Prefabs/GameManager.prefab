@@ -460,7 +460,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 12
+  m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
@@ -649,7 +649,7 @@ MonoBehaviour:
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
-    m_MinValue: -30
+    m_MinValue: 0
     m_MaxValue: 30
     m_Wrap: 0
     m_Recentering:
@@ -918,7 +918,6 @@ GameObject:
   - component: {fileID: 8205382934654121542}
   - component: {fileID: 6242862136350679169}
   - component: {fileID: 8700078727690392725}
-  - component: {fileID: 5656629005204201455}
   m_Layer: 0
   m_Name: 3rdPersonView (1)
   m_TagString: PauseCamera
@@ -1035,16 +1034,3 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &5656629005204201455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575727998890041189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80741a49bc32fa642a777dc147d31b80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 7579379511529831716, guid: f8a51a706d04b77429852be5bbf6c28c, type: 3}
