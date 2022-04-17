@@ -9,13 +9,13 @@ public class MovePlayer : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private Vector2 inputVec, currentAnimationBlendVector, animationVelocity;
-    private InputAction moveAction, jumpAction, runStart, runFinish;
+    private InputAction moveAction, jumpAction, runStart, runFinish, waveAction;
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
-                runAnimation, basicAnimation;
+                runAnimation, basicAnimation, waveAnimation;
     private bool groundedPlayer, isRunning;
     [SerializeField]
     private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
@@ -29,6 +29,7 @@ public class MovePlayer : MonoBehaviour
         cameraTransform = Camera.main.transform;
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
+        waveAction = playerInput.actions["Wave"];
         runStart = playerInput.actions["RunStart"];
         runFinish = playerInput.actions["RunEnd"];
         runStart.performed += x => PressSprint();
@@ -41,11 +42,14 @@ public class MovePlayer : MonoBehaviour
         landAnimation = Animator.StringToHash("Land");
         fallAnimation = Animator.StringToHash("Falling");
         runAnimation = Animator.StringToHash("Running");
+        waveAnimation = Animator.StringToHash("Waving");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update(){
+
+
         // Ground check
         groundedPlayer = controller.isGrounded;
         animator.SetBool("IsGrounded", groundedPlayer);
@@ -65,14 +69,17 @@ public class MovePlayer : MonoBehaviour
             playerSpeed = 2.0f;
         }
 
-        // Movement dependent on camera's rotation
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationVelocity, animationSmoothTime);
+        // Don't perform certain actions if currently waving
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Waving")){
+            // Movement dependent on camera's rotation
+            Vector2 input = moveAction.ReadValue<Vector2>();
+            currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationVelocity, animationSmoothTime);
 
-        Vector3 move = new Vector3(currentAnimationBlendVector.x, 0, currentAnimationBlendVector.y);
-        move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
-        move.y = 0.0f;
-        controller.Move(move * Time.deltaTime * playerSpeed);
+            Vector3 move = new Vector3(currentAnimationBlendVector.x, 0, currentAnimationBlendVector.y);
+            move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
+            move.y = 0.0f;
+            controller.Move(move * Time.deltaTime * playerSpeed);
+        }
 
         // Animation
         animator.SetFloat(moveXAnimationParameterId, currentAnimationBlendVector.x);
@@ -83,6 +90,11 @@ public class MovePlayer : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             animator.CrossFade(jumpAnimation, animationPlayTransition);
             AudioManager.jump.Play();
+        }
+
+        // Waving
+        if(waveAction.triggered && groundedPlayer){
+            animator.CrossFade(waveAnimation, animationPlayTransition);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;

@@ -33,7 +33,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Switch",
+                    "name": "Wave",
                     "type": "Button",
                     "id": "a469bbb3-654e-40a9-8f34-e2cad6dabee7",
                     "expectedControlType": "Button",
@@ -143,7 +143,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch",
+                    "action": "Wave",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
