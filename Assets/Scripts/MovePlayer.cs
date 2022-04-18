@@ -133,6 +133,13 @@ public class MovePlayer : MonoBehaviour
             AudioManager.complete.Play();
             controller.enabled = true;
         }
+        
+        if(other.gameObject.CompareTag("DeathZone")){
+            controller.enabled = false;
+            AudioManager.fall.Play();
+            transform.position = new Vector3(0,5,0);
+            controller.enabled = true;
+        }
     }
 
     void Awake(){

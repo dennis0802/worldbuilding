@@ -7,6 +7,7 @@ TagManager:
   - Environment
   - TransitionTest
   - PauseCamera
+  - DeathZone
   layers:
   - Default
   - TransparentFX
