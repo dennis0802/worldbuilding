@@ -12,6 +12,7 @@ Assets used:
 * The ancient forest of the fairies by Boris Sandor Benesch
 * Action RPG Music Free by VGComposer
 * Footstep sound from https://mixkit.co/free-sound-effects/footsteps/
+* RPG Adventure Pack by Bakuda Music
 
 All images used belong to their respective owners:
 * BG Images from Ori and the Blind Forest/Will of the Wisps
