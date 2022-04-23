@@ -9,14 +9,14 @@ public class MovePlayer : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private Vector2 inputVec, currentAnimationBlendVector, animationVelocity;
-    private InputAction moveAction, jumpAction, runStart, runFinish, waveAction;
+    private InputAction moveAction, jumpAction, runStart, runFinish, waveAction, pickUpAction;
     private PlayerInput playerInput;
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
     private float stepCooldown, stepRate = 0.5f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
-                runAnimation, basicAnimation, waveAnimation;
+                runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
     private bool groundedPlayer, isRunning;
     [SerializeField]
     private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
@@ -31,6 +31,7 @@ public class MovePlayer : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         waveAction = playerInput.actions["Wave"];
+        pickUpAction = playerInput.actions["PickUp"];
         runStart = playerInput.actions["RunStart"];
         runFinish = playerInput.actions["RunEnd"];
         runStart.performed += x => PressSprint();
@@ -44,6 +45,7 @@ public class MovePlayer : MonoBehaviour
         fallAnimation = Animator.StringToHash("Falling");
         runAnimation = Animator.StringToHash("Running");
         waveAnimation = Animator.StringToHash("Waving");
+        pickUpAnimation = Animator.StringToHash("PickUp");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -69,8 +71,8 @@ public class MovePlayer : MonoBehaviour
             playerSpeed = 2.0f;
         }
 
-        // Don't perform certain actions if currently waving
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Waving")){
+        // Don't perform certain actions if currently waving/picking up
+        if(!(animator.GetCurrentAnimatorStateInfo(0).IsName("Waving") || animator.GetCurrentAnimatorStateInfo(0).IsName("PickUp"))){
             // Movement dependent on camera's rotation
             Vector2 input = moveAction.ReadValue<Vector2>();
             currentAnimationBlendVector = Vector2.SmoothDamp(currentAnimationBlendVector, input, ref animationVelocity, animationSmoothTime);
@@ -106,6 +108,10 @@ public class MovePlayer : MonoBehaviour
         // Waving
         if(waveAction.triggered && groundedPlayer){
             animator.CrossFade(waveAnimation, animationPlayTransition);
+        }
+
+        if(pickUpAction.triggered && groundedPlayer){
+            animator.CrossFade(pickUpAnimation, animationPlayTransition);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
