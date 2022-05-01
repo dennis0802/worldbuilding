@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Core/ChioPlains.unity
     guid: 5da0a9225653b2b4093d85aa7e747d86
+  - enabled: 0
+    path: Assets/Scenes/SanctumForestDebug.unity
+    guid: 06c2783b4bf25e84fb186b634998b9f6
   m_configObjects: {}

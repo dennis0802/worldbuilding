@@ -14,13 +14,16 @@ public class MovePlayer : MonoBehaviour
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
-    private float stepCooldown, stepRate = 0.5f;
+    private float stepCooldown, stepRate = 0.5f, groundDistance = 0.01f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
     private bool groundedPlayer, isRunning;
     [SerializeField]
-    private float playerSpeed = 2.0f, jumpHeight = 1.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
+    private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
                   animationSmoothTime = 0.1f, animationPlayTransition = 0.15f;
+
+    public Transform groundCheck;
+    public LayerMask groundMask;
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
     // Running feature based off of: https://www.youtube.com/watch?v=UqLl53ZPNfo
@@ -52,23 +55,24 @@ public class MovePlayer : MonoBehaviour
 
     void Update(){
         // Ground check
-        groundedPlayer = controller.isGrounded;
+        groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        Debug.Log(groundedPlayer);
         animator.SetBool("IsGrounded", groundedPlayer);
         stepCooldown -= Time.deltaTime;
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f;
+            playerVelocity.y = -2f;
         }
         else if(!groundedPlayer && playerVelocity.y < 0){
             animator.CrossFade(fallAnimation, animationPlayTransition-0.12f);
         }
 
         if(isRunning){
-            playerSpeed = 4.0f;
+            playerSpeed = 8.0f;
         }
         else{
-            playerSpeed = 2.0f;
+            playerSpeed = 4.0f;
         }
 
         // Don't perform certain actions if currently waving/picking up
