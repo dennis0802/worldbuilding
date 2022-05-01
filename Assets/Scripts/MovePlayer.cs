@@ -54,6 +54,7 @@ public class MovePlayer : MonoBehaviour
     }
 
     void Update(){
+
         // Ground check
         groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         Debug.Log(groundedPlayer);
