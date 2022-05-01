@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseAction = playerInput.actions["Pause"];
         vcam = GameObject.FindWithTag("PauseCamera").GetComponent<CinemachineVirtualCamera>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+/*
     void Awake(){
         // Check for an existing player that has this script attached
         if(instance == null){
@@ -50,6 +52,7 @@ public class PauseMenu : MonoBehaviour
             Destroy(gameObject);
         }
     }
+*/
 
     public void Resume(){
         AudioManager.buttonClick.Play();
@@ -73,7 +76,7 @@ public class PauseMenu : MonoBehaviour
         vcam.Priority -= priorityBoost; 
         pauseMenuUI.SetActive(false);
         AudioManager.buttonClick.Play();
-        AudioManager.forestBgm.Stop();
+        audioManager.StopAudio();
         AudioManager.bgm.Play();
         SceneManager.LoadScene(1);
     }

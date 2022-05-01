@@ -1,12 +1,11 @@
-using System.Runtime.Versioning;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep;
+    private static AudioSource[] audioList;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme;
     
     // Start is called before the first frame update
     void Start()
@@ -19,13 +18,13 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // Prepare all audio to be used in the program
     void LoadAudio(){
         // Change this if loading more audio
-        int numAudio = 7;
+        int numAudio = 8;
 
         for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
@@ -39,6 +38,7 @@ public class AudioManager : MonoBehaviour
         audioList[4].clip = (AudioClip)Resources.Load("Audio/05 The fairy forest");
         audioList[5].clip = (AudioClip)Resources.Load("Audio/level-completed");
         audioList[6].clip = (AudioClip)Resources.Load("Audio/footstep");
+        audioList[7].clip = (AudioClip)Resources.Load("Audio/01Town0");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -51,8 +51,15 @@ public class AudioManager : MonoBehaviour
         forestBgm = gameObject.GetComponents<AudioSource>()[4];
         complete = gameObject.GetComponents<AudioSource>()[5];
         footstep = gameObject.GetComponents<AudioSource>()[6];
+        plainsTheme = gameObject.GetComponents<AudioSource>()[7];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
+    }
+
+    public void StopAudio(){
+        for(int i = 0; i < audioList.Length; i++){
+            gameObject.GetComponents<AudioSource>()[i].Stop();
+        }
     }
 }

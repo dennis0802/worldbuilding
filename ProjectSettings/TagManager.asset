@@ -8,6 +8,7 @@ TagManager:
   - TransitionTest
   - PauseCamera
   - DeathZone
+  - AudioManager
   layers:
   - Default
   - TransparentFX

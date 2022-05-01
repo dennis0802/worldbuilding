@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 3069866831755617099}
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 7579379511529831716, guid: f8a51a706d04b77429852be5bbf6c28c, type: 3}
   vcam: {fileID: 0}
 --- !u!1 &3069866831398399303
 GameObject:
