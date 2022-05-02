@@ -332,45 +332,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374907824}
   m_CullTransparentMesh: 1
---- !u!1 &540661291 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5752844893484678048, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
-  m_PrefabInstance: {fileID: 4243849060698110241}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &540661293
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540661291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -10}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
-  m_AngularDampingMode: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AngularDamping: 0
---- !u!114 &540661295
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 540661291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &692007469
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +666,14 @@ PrefabInstance:
     - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060431569927, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_VerticalAxis.m_MaxValue
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060431569927, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_VerticalAxis.m_MinValue
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5656629005204201455, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_Enabled
