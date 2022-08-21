@@ -11,6 +11,7 @@ TagManager:
   - AudioManager
   - PlainsToTower
   - TowerToPlains
+  - IntoGroundFloorTower
   layers:
   - Default
   - TransparentFX
