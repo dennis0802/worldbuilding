@@ -32,6 +32,9 @@ public class CameraController : MonoBehaviour
                 vcam.LookAt = Target;
                 vcam.Follow = Target;
             }
+            if(PauseMenu.IsPaused){
+                Debug.Log("test");
+            }
         }
     }
 }

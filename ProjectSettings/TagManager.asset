@@ -9,6 +9,8 @@ TagManager:
   - PauseCamera
   - DeathZone
   - AudioManager
+  - PlainsToTower
+  - TowerToPlains
   layers:
   - Default
   - TransparentFX

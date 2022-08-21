@@ -56,8 +56,7 @@ public class MovePlayer : MonoBehaviour
     void Update(){
 
         // Ground check
-        groundedPlayer = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        Debug.Log(groundedPlayer);
+        groundedPlayer = controller.isGrounded;
         animator.SetBool("IsGrounded", groundedPlayer);
         stepCooldown -= Time.deltaTime;
 
@@ -70,10 +69,10 @@ public class MovePlayer : MonoBehaviour
         }
 
         if(isRunning){
-            playerSpeed = 8.0f;
+            playerSpeed = 6.0f;
         }
         else{
-            playerSpeed = 4.0f;
+            playerSpeed = 3.0f;
         }
 
         // Don't perform certain actions if currently waving/picking up
@@ -129,7 +128,8 @@ public class MovePlayer : MonoBehaviour
         // Falling out of bounds
         if(transform.position.y < -10){
             AudioManager.fall.Play();
-            transform.position = new Vector3(0, 5, 0);
+            // Replace with spawnpoint based respawning later
+            transform.position = new Vector3(44, 8, -257);
         }
 
         if(SceneManager.GetActiveScene().buildIndex == 1){
@@ -144,7 +144,25 @@ public class MovePlayer : MonoBehaviour
             AudioManager.complete.Play();
             controller.enabled = true;
         }
-        
+        // Going from Chio Plains to Witcher's Tower
+        if(other.gameObject.CompareTag("PlainsToTower")){
+            controller.enabled = false;
+            transform.position = new Vector3(75,0,30);
+            AudioManager.complete.Play();
+            AudioManager.plainsTheme.Stop();
+            controller.enabled = true;
+            SceneManager.LoadScene(5);
+        }
+        // Going from Witcher's Tower to Chio Plains
+        if(other.gameObject.CompareTag("TowerToPlains")){
+            controller.enabled = false;
+            transform.position = new Vector3(29,0,-239);
+            AudioManager.complete.Play();
+            AudioManager.towerTheme.Stop();
+            controller.enabled = true;
+            SceneManager.LoadScene(3);
+        }
+        // Contacting a death zone (relevant to shrines/dungeons)
         if(other.gameObject.CompareTag("DeathZone")){
             controller.enabled = false;
             AudioManager.fall.Play();
