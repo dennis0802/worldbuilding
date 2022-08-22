@@ -7,9 +7,11 @@ public class WitchersTower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.towerTheme.loop = true;
-        AudioManager.towerTheme.volume = 0.4f;
-        AudioManager.towerTheme.Play();
+        if(!AudioManager.towerTheme.isPlaying){
+            AudioManager.towerTheme.loop = true;
+            AudioManager.towerTheme.volume = 0.4f;
+            AudioManager.towerTheme.Play();
+        }
     }
 
     // Update is called once per frame

@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9beda531928fc40968802117a5d256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RecenterTarget: 0
+  m_RecenterTarget: 2
   m_VerticalAxis:
     Value: 0
     m_SpeedMode: 0
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.25
   m_ScreenY: 0.17
-  m_CameraDistance: 10
+  m_CameraDistance: 3.6
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -703,7 +703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2747803592423155843, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.061733
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2747803592423155843, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_LocalPosition.z
@@ -767,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.0617328
+      value: 10.000001
       objectReference: {fileID: 0}
     - target: {fileID: 4243849060333524605, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_LocalPosition.z
@@ -789,13 +789,13 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4243849060431569927, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
-      propertyPath: m_VerticalAxis.m_MaxValue
-      value: 40
+    - target: {fileID: 4243849060395376833, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4243849060431569927, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
-      propertyPath: m_VerticalAxis.m_MinValue
-      value: 10
+      propertyPath: m_VerticalAxis.m_MaxValue
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5656629005204201455, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_Enabled

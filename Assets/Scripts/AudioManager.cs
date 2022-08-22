@@ -57,6 +57,7 @@ public class AudioManager : MonoBehaviour
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
+        complete.volume = 0.2f;
     }
 
     public void StopAudio(){

@@ -14,7 +14,7 @@ public class MovePlayer : MonoBehaviour
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
-    private float stepCooldown, stepRate = 0.5f, groundDistance = 0.01f;
+    private float stepCooldown, stepRate = 0.5f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
     private bool groundedPlayer, isRunning;
@@ -145,7 +145,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
         }
         // Going from Chio Plains to Witcher's Tower
-        if(other.gameObject.CompareTag("PlainsToTower")){
+        else if(other.gameObject.CompareTag("PlainsToTower")){
             controller.enabled = false;
             transform.position = new Vector3(75,0,30);
             AudioManager.complete.Play();
@@ -154,7 +154,7 @@ public class MovePlayer : MonoBehaviour
             SceneManager.LoadScene(5);
         }
         // Going from Witcher's Tower to Chio Plains
-        if(other.gameObject.CompareTag("TowerToPlains")){
+        else if(other.gameObject.CompareTag("TowerToPlains")){
             controller.enabled = false;
             transform.position = new Vector3(29,0,-239);
             AudioManager.complete.Play();
@@ -162,8 +162,22 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(3);
         }
+        // Going inside the tower from ground floor
+        else if(other.gameObject.CompareTag("IntoGroundFloorTower")){
+            controller.enabled = false;
+            transform.position = new Vector3(-2,1,-20);
+            controller.enabled = true;
+            SceneManager.LoadScene(6);
+        }
+        // Going out the tower
+        else if(other.gameObject.CompareTag("ExitGroundFloor")){
+            controller.enabled = false;
+            transform.position = new Vector3(73,0,78);
+            controller.enabled = true;
+            SceneManager.LoadScene(5);
+        }
         // Contacting a death zone (relevant to shrines/dungeons)
-        if(other.gameObject.CompareTag("DeathZone")){
+        else if(other.gameObject.CompareTag("DeathZone")){
             controller.enabled = false;
             AudioManager.fall.Play();
             transform.position = new Vector3(0,5,0);
