@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme;
     
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     // Prepare all audio to be used in the program
     void LoadAudio(){
         // Change this if loading more audio
-        int numAudio = 9;
+        int numAudio = 10;
 
         for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
@@ -40,6 +40,7 @@ public class AudioManager : MonoBehaviour
         audioList[6].clip = (AudioClip)Resources.Load("Audio/footstep");
         audioList[7].clip = (AudioClip)Resources.Load("Audio/01Town0");
         audioList[8].clip = (AudioClip)Resources.Load("Audio/01 Riding dragons");
+        audioList[9].clip = (AudioClip)Resources.Load("Audio/Over the Far Hills");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -54,10 +55,12 @@ public class AudioManager : MonoBehaviour
         footstep = gameObject.GetComponents<AudioSource>()[6];
         plainsTheme = gameObject.GetComponents<AudioSource>()[7];
         towerTheme = gameObject.GetComponents<AudioSource>()[8];
+        ironMtTheme= gameObject.GetComponents<AudioSource>()[9];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
         complete.volume = 0.2f;
+        ironMtTheme.volume = 0.5f;
     }
 
     public void StopAudio(){

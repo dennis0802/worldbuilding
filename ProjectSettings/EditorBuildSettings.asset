@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Core/Shrines/WitchersTower/WitchersTowerInside.unity
     guid: 9376ae7b718ac594fb9526874247a3c8
+  - enabled: 1
+    path: Assets/Scenes/Core/IronMountain.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

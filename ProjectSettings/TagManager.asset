@@ -16,6 +16,8 @@ TagManager:
   - EnterTowerTop
   - ExitTowerTop
   - MainElevator
+  - PlainsToIron
+  - IronToPlains
   layers:
   - Default
   - TransparentFX

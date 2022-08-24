@@ -190,6 +190,24 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(6);
         }
+        // Going from plains to Iron Mountain
+        else if(other.gameObject.CompareTag("PlainsToIron")){
+            controller.enabled = false;
+            transform.position = new Vector3(-140, 2.39f, -402);
+            controller.enabled = true;
+            AudioManager.complete.Play();
+            AudioManager.plainsTheme.Stop();
+            SceneManager.LoadScene(7);
+        }
+        // Going from Iron Mountain to plains
+        else if(other.gameObject.CompareTag("IronToPlains")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            AudioManager.complete.Play();
+            AudioManager.ironMtTheme.Stop();
+            SceneManager.LoadScene(3);
+        }        
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone")){
             controller.enabled = false;
@@ -197,6 +215,7 @@ public class MovePlayer : MonoBehaviour
             transform.position = new Vector3(0,5,0);
             controller.enabled = true;
         }
+
     }
 
     void Awake(){

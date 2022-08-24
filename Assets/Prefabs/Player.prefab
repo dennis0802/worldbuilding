@@ -108,7 +108,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.7
-  m_Radius: 0.5
+  m_Radius: 0.27
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -132,6 +132,7 @@ MonoBehaviour:
   rotationSpeed: 5
   animationSmoothTime: 0.1
   animationPlayTransition: 0.15
+  forceMagnitude: 1
   groundCheck: {fileID: 1373775602855282273}
   groundMask:
     serializedVersion: 2
