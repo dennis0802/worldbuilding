@@ -76,8 +76,6 @@ public class PauseMenu : MonoBehaviour
         vcam.Priority -= priorityBoost; 
         pauseMenuUI.SetActive(false);
         AudioManager.buttonClick.Play();
-        audioManager.StopAudio();
-        AudioManager.bgm.Play();
         SceneManager.LoadScene(1);
     }
 

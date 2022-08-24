@@ -324,9 +324,9 @@ GameObject:
   - component: {fileID: 183714110}
   - component: {fileID: 183714109}
   - component: {fileID: 183714108}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(-400.0, 0.0, -202.0)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -573,10 +573,9 @@ GameObject:
   - component: {fileID: 283080911}
   - component: {fileID: 283080910}
   - component: {fileID: 283080909}
-  - component: {fileID: 283080912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(-400.0, 0.0, -502.0)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -639,18 +638,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &283080912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283080908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec80b343940a6d4fbde5df978ea3854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &297611126
 GameObject:
   m_ObjectHideFlags: 0
@@ -8075,9 +8062,9 @@ GameObject:
   - component: {fileID: 1223954952}
   - component: {fileID: 1223954951}
   - component: {fileID: 1223954950}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(-700.0, 0.0, -202.0)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -8731,9 +8718,9 @@ GameObject:
   - component: {fileID: 1397665232}
   - component: {fileID: 1397665231}
   - component: {fileID: 1397665230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_(-700.0, 0.0, -502.0)
-  m_TagString: Untagged
+  m_TagString: Environment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

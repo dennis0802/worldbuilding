@@ -1,24 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
     public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme;
+    public static AudioSource currentAudio = null;
     
     // Start is called before the first frame update
     void Start()
     {
         LoadAudio();
-        bgm.loop = true;
-        bgm.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Refactored audio - let the audio manager handle the bgms
+        // Starting menus bgm
+        if(SceneManager.GetActiveScene().buildIndex < 3 && currentAudio != bgm){
+            if(currentAudio != null){
+                currentAudio.Stop();
+            }
+            bgm.loop = true;
+            currentAudio = bgm;
+            currentAudio.Play();
+        }
+        // Plains themes - Fettuccine Plains, Waxwing Mountain, and Maillo Shores
+        else if(SceneManager.GetActiveScene().buildIndex == 3 && currentAudio != plainsTheme){
+            currentAudio.Stop();
+            plainsTheme.loop = true;
+            plainsTheme.volume = 0.4f;
+            currentAudio = plainsTheme;
+            currentAudio.Play();
+        }
+        // Tower theme - Witcher's Tower
+        else if((SceneManager.GetActiveScene().buildIndex == 5 || SceneManager.GetActiveScene().buildIndex == 6) && currentAudio != towerTheme){
+            currentAudio.Stop();
+            towerTheme.loop = true;
+            towerTheme.volume = 0.4f;
+            currentAudio = towerTheme;
+            currentAudio.Play();
+        }
+        // Mountain climb theme - Iron Climb
+        else if((SceneManager.GetActiveScene().buildIndex == 7 || SceneManager.GetActiveScene().buildIndex == 8) && currentAudio != ironMtTheme){
+            currentAudio.Stop();
+            ironMtTheme.loop = true;
+            ironMtTheme.volume = 0.5f;
+            currentAudio = ironMtTheme;
+            currentAudio.Play();
+        }
+        // Iron Shrine theme
 
+        // Windward Pools
+
+        // Buttefly Forest
+        else if(SceneManager.GetActiveScene().buildIndex == 4 && currentAudio != forestBgm){
+            currentAudio.Stop();
+            forestBgm.loop = true;
+            currentAudio = forestBgm;
+            currentAudio.Play();
+        }
     }
 
     // Prepare all audio to be used in the program
@@ -60,7 +104,6 @@ public class AudioManager : MonoBehaviour
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
         complete.volume = 0.2f;
-        ironMtTheme.volume = 0.5f;
     }
 
     public void StopAudio(){
