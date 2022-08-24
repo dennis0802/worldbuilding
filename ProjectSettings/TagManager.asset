@@ -15,8 +15,7 @@ TagManager:
   - ExitGroundFloor
   - EnterTowerTop
   - ExitTowerTop
-  - EnterTowerBasement
-  - ExitTowerBasement
+  - MainElevator
   layers:
   - Default
   - TransparentFX

@@ -20,7 +20,7 @@ public class MovePlayer : MonoBehaviour
     private bool groundedPlayer, isRunning;
     [SerializeField]
     private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
-                  animationSmoothTime = 0.1f, animationPlayTransition = 0.15f;
+                  animationSmoothTime = 0.1f, animationPlayTransition = 0.15f, forceMagnitude = 1.0f;
 
     public Transform groundCheck;
     public LayerMask groundMask;
@@ -169,12 +169,26 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(6);
         }
-        // Going out the tower
+        // Going out the tower on ground floor
         else if(other.gameObject.CompareTag("ExitGroundFloor")){
             controller.enabled = false;
             transform.position = new Vector3(73,0,78);
             controller.enabled = true;
             SceneManager.LoadScene(5);
+        }
+        // Going to tower top
+        else if(other.gameObject.CompareTag("EnterTowerTop")){
+            controller.enabled = false;
+            transform.position = new Vector3(47,122,107);
+            controller.enabled = true;
+            SceneManager.LoadScene(5);
+        }
+        // Going back in tower from top
+        else if(other.gameObject.CompareTag("ExitTowerTop")){
+            controller.enabled = false;
+            transform.position = new Vector3(-24, 117.83f, -3);
+            controller.enabled = true;
+            SceneManager.LoadScene(6);
         }
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone")){
@@ -208,6 +222,16 @@ public class MovePlayer : MonoBehaviour
         if(animator != null){
             isRunning = false;
             animator.SetBool("IsRunning", isRunning);
+        }
+    }
+    
+    void OnControllerColliderHit(ControllerColliderHit hit){
+        Rigidbody r = hit.collider.attachedRigidbody;
+        if(r != null){
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            forceDirection.y = 0;
+            forceDirection.Normalize();
+            r.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
         }
     }
 }

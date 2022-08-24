@@ -11,8 +11,13 @@ public class WitcherPlatform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        max = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
-        min = new Vector3(transform.position.x, transform.position.y-1, transform.position.z);
+        max = new Vector3(transform.position.x, transform.position.y+1.0f, transform.position.z);
+        min = new Vector3(transform.position.x, transform.position.y-1.0f, transform.position.z);
+        if(transform.tag == "MainElevator"){
+            max = new Vector3(transform.position.x, transform.position.y+17.0f, transform.position.z);
+            min = new Vector3(transform.position.x, transform.position.y-9.0f, transform.position.z);
+            speed = 3.0f;
+        }
     }
 
     // Update is called once per frame
@@ -31,6 +36,21 @@ public class WitcherPlatform : MonoBehaviour
         }
         else{
             transform.position = Vector3.MoveTowards(transform.position, min, step);
+        }
+    }
+
+    // Allow player to move with the platform
+    // Auto Sync Transforms must be used to work with CharacterControllers
+    void OnTriggerEnter(Collider other){
+        if(other.transform.tag == "Player"){
+            other.transform.parent = transform;
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+        if(other.transform.tag == "Player"){
+            other.transform.parent = null;
+            DontDestroyOnLoad(other);
         }
     }
 }

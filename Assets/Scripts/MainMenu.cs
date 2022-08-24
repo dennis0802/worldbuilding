@@ -10,11 +10,12 @@ public class MainMenu : MonoBehaviour{
     // 0 = splash screen
     // 1 = menu
     // 2 = splash screen
-    // 3 = start off at the Spirit Maple
+    // 3 = start off at the Spirit Maple (currently Fettuccine Plains)
+    // 4 = debug
 
     public void Play(){
         AudioManager.buttonClick.Play();
-        SceneManager.LoadScene(6);
+        SceneManager.LoadScene(3);
         AudioManager.bgm.Stop();
         Debug.Log("Projected finished date is Dec 31, 2022");
     }
