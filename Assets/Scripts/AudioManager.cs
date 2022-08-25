@@ -99,7 +99,7 @@ public class AudioManager : MonoBehaviour
         footstep = gameObject.GetComponents<AudioSource>()[6];
         plainsTheme = gameObject.GetComponents<AudioSource>()[7];
         towerTheme = gameObject.GetComponents<AudioSource>()[8];
-        ironMtTheme= gameObject.GetComponents<AudioSource>()[9];
+        ironMtTheme = gameObject.GetComponents<AudioSource>()[9];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
