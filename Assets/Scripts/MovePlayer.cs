@@ -208,6 +208,55 @@ public class MovePlayer : MonoBehaviour
             AudioManager.ironMtTheme.Stop();
             SceneManager.LoadScene(3);
         }        
+
+        // Ground entrance of Iron Mountain's caves
+        else if(other.gameObject.CompareTag("IronGroundToCave")){
+            controller.enabled = false;
+            transform.position = new Vector3(0, 0, 0);
+            controller.enabled = true;
+            SceneManager.LoadScene(8);
+        }
+
+        // Peak entrance to cave
+        else if(other.gameObject.CompareTag("IronPeakToCave")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            SceneManager.LoadScene(8);
+        }     
+
+        // Ground exit of Iron Mountain's caves
+        else if(other.gameObject.CompareTag("CaveToOutside")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            SceneManager.LoadScene(7);
+        }        
+
+        // Cave exit to peak
+        else if(other.gameObject.CompareTag("CaveToPeak")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            SceneManager.LoadScene(7);
+        }     
+
+        // Going into Iron Shrine
+        else if(other.gameObject.CompareTag("EnterIron")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            SceneManager.LoadScene(9);
+        }     
+
+        // Exiting Iron Shrine
+        else if(other.gameObject.CompareTag("ExitIron")){
+            controller.enabled = false;
+            transform.position = new Vector3(-35, 0, -415);
+            controller.enabled = true;
+            SceneManager.LoadScene(7);
+        }     
+
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone")){
             controller.enabled = false;

@@ -18,6 +18,8 @@ TagManager:
   - MainElevator
   - PlainsToIron
   - IronToPlains
+  - IronGroundToCave
+  - IronPeakToCave
   layers:
   - Default
   - TransparentFX
