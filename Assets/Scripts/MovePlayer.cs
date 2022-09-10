@@ -228,7 +228,7 @@ public class MovePlayer : MonoBehaviour
         // Ground exit of Iron Mountain's caves
         else if(other.gameObject.CompareTag("CaveToOutside")){
             controller.enabled = false;
-            transform.position = new Vector3(-35, 0, -415);
+            transform.position = new Vector3(-470, 23, -300);
             controller.enabled = true;
             SceneManager.LoadScene(7);
         }        

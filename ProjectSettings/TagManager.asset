@@ -20,6 +20,7 @@ TagManager:
   - IronToPlains
   - IronGroundToCave
   - IronPeakToCave
+  - CaveToOutside
   layers:
   - Default
   - TransparentFX

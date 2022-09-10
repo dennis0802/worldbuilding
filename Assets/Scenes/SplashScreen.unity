@@ -332,6 +332,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374907824}
   m_CullTransparentMesh: 1
+--- !u!1 &574652929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4243849060693666806, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+  m_PrefabInstance: {fileID: 4243849060698110241}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &574652931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574652929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0333de316e887804fb9325414a6492fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalLight: {fileID: 932574099}
 --- !u!1 &692007469
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +466,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdown: 3
+--- !u!1 &932574099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4243849059844198458, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+  m_PrefabInstance: {fileID: 4243849060698110241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1361711821
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +780,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4243849059844198458, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4243849060333524602, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: field of view
       value: 60
@@ -796,6 +823,10 @@ PrefabInstance:
     - target: {fileID: 4243849060431569927, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_VerticalAxis.m_MaxValue
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243849060693666806, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5656629005204201455, guid: 963fc2e67420f384bb677b457ec9b754, type: 3}
       propertyPath: m_Enabled
