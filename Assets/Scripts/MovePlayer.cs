@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MovePlayer : MonoBehaviour
 {
     private CharacterController controller;
-    private Vector3 playerVelocity;
+    private Vector3 playerVelocity, respawnLocation = new Vector3(0,5,0);
     private Vector2 inputVec, currentAnimationBlendVector, animationVelocity;
     private InputAction moveAction, jumpAction, runStart, runFinish, waveAction, pickUpAction;
     private PlayerInput playerInput;
@@ -128,8 +128,7 @@ public class MovePlayer : MonoBehaviour
         // Falling out of bounds
         if(transform.position.y < -10){
             AudioManager.fall.Play();
-            // Replace with spawnpoint based respawning later
-            transform.position = new Vector3(44, 8, -257);
+            transform.position = respawnLocation;
         }
 
         if(SceneManager.GetActiveScene().buildIndex == 1){
@@ -233,6 +232,7 @@ public class MovePlayer : MonoBehaviour
             SceneManager.LoadScene(7);
         }        
 
+/*
         // Cave exit to peak
         else if(other.gameObject.CompareTag("CaveToPeak")){
             controller.enabled = false;
@@ -256,13 +256,19 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(7);
         }     
+*/
 
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone")){
             controller.enabled = false;
             AudioManager.fall.Play();
-            transform.position = new Vector3(0,5,0);
+            transform.position = respawnLocation;
             controller.enabled = true;
+        }
+
+        // Reassign respawn point (relevant to dungeons and death zones)
+        else if(other.gameObject.CompareTag("Checkpoint")){
+            respawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
 
     }
