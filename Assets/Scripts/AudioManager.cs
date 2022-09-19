@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrine;
     public static AudioSource currentAudio = null;
     
     // Start is called before the first frame update
@@ -52,7 +52,9 @@ public class AudioManager : MonoBehaviour
             currentAudio = ironMtTheme;
             currentAudio.Play();
         }
-        // Iron Shrine theme
+        // Iron Shrine
+
+        // Waxwing Mountain
 
         // Windward Pools
 
@@ -63,12 +65,24 @@ public class AudioManager : MonoBehaviour
             currentAudio = forestBgm;
             currentAudio.Play();
         }
+
+        // Ben's Reach
+
+        // Thai Peak
+
+        // Trinity Depths
+
+        // Tree of Life
+
+        // Spirit Maple
+
+        // Luma Pools
     }
 
     // Prepare all audio to be used in the program
     void LoadAudio(){
         // Change this if loading more audio
-        int numAudio = 10;
+        int numAudio = 11;
 
         for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
@@ -85,6 +99,7 @@ public class AudioManager : MonoBehaviour
         audioList[7].clip = (AudioClip)Resources.Load("Audio/01Town0");
         audioList[8].clip = (AudioClip)Resources.Load("Audio/01 Riding dragons");
         audioList[9].clip = (AudioClip)Resources.Load("Audio/Over the Far Hills");
+        audioList[10].clip = (AudioClip)Resources.Load("Audio/break");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];

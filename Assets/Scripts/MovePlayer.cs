@@ -219,7 +219,7 @@ public class MovePlayer : MonoBehaviour
         // Peak entrance to cave
         else if(other.gameObject.CompareTag("IronPeakToCave")){
             controller.enabled = false;
-            transform.position = new Vector3(-35, 0, -415);
+            transform.position = new Vector3(-91, 148, 263);
             controller.enabled = true;
             SceneManager.LoadScene(8);
         }     
@@ -232,11 +232,10 @@ public class MovePlayer : MonoBehaviour
             SceneManager.LoadScene(7);
         }        
 
-/*
         // Cave exit to peak
         else if(other.gameObject.CompareTag("CaveToPeak")){
             controller.enabled = false;
-            transform.position = new Vector3(-35, 0, -415);
+            transform.position = new Vector3(-551, 123, -247.5f);
             controller.enabled = true;
             SceneManager.LoadScene(7);
         }     
@@ -256,7 +255,6 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(7);
         }     
-*/
 
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone")){

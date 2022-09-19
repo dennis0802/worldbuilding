@@ -22,6 +22,9 @@ TagManager:
   - IronPeakToCave
   - CaveToOutside
   - Checkpoint
+  - CaveToPeak
+  - EnterIron
+  - ExitIron
   layers:
   - Default
   - TransparentFX
