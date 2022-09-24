@@ -2327,6 +2327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7579379511529831723, guid: f8a51a706d04b77429852be5bbf6c28c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8a51a706d04b77429852be5bbf6c28c, type: 3}
 --- !u!1001 &498566030
@@ -3553,7 +3557,7 @@ Transform:
   - {fileID: 1704113947}
   - {fileID: 1636481877}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &715436975
 GameObject:
@@ -11487,7 +11491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4187338017269551024, guid: 21384520e1fbbe0409ca105497bff749, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4187338017269551024, guid: 21384520e1fbbe0409ca105497bff749, type: 3}
       propertyPath: m_LocalPosition.x

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CaveFloorRotateB : MonoBehaviour{
     void Update(){
         if(!PauseMenu.IsPaused){
-            transform.Rotate(new Vector3(0,100,0) * Time.deltaTime);
+            transform.Rotate(new Vector3(0,70,0) * Time.deltaTime);
         }
     }
 

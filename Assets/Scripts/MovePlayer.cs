@@ -17,7 +17,7 @@ public class MovePlayer : MonoBehaviour
     private float stepCooldown, stepRate = 0.5f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
-    private bool groundedPlayer, isRunning;
+    private bool groundedPlayer, isRunning, parentChanged;
     [SerializeField]
     private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
                   animationSmoothTime = 0.1f, animationPlayTransition = 0.15f, forceMagnitude = 1.0f;
@@ -107,6 +107,12 @@ public class MovePlayer : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             animator.CrossFade(jumpAnimation, animationPlayTransition);
             AudioManager.jump.Play();
+            
+            if(parentChanged){
+                transform.parent = null;
+                DontDestroyOnLoad(gameObject);
+                parentChanged = false;
+            }
         }
 
         // Waving
@@ -298,6 +304,17 @@ public class MovePlayer : MonoBehaviour
     }
     
     void OnControllerColliderHit(ControllerColliderHit hit){
+        // For rotating platforms
+        if(hit.gameObject.tag == "RotatingPlatform"){
+            transform.parent = hit.transform;
+            parentChanged = true;
+        }
+        else if(parentChanged){
+            transform.parent = null;
+            DontDestroyOnLoad(gameObject);
+            parentChanged = false;
+        }
+
         Rigidbody r = hit.collider.attachedRigidbody;
         if(r != null){
             Vector3 forceDirection = hit.gameObject.transform.position - transform.position;

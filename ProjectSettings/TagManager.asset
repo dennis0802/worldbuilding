@@ -25,6 +25,7 @@ TagManager:
   - CaveToPeak
   - EnterIron
   - ExitIron
+  - RotatingPlatform
   layers:
   - Default
   - TransparentFX
