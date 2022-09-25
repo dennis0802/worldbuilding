@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrine;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrineTheme;
     public static AudioSource currentAudio = null;
     
     // Start is called before the first frame update
@@ -53,6 +53,12 @@ public class AudioManager : MonoBehaviour
             currentAudio.Play();
         }
         // Iron Shrine
+        else if(SceneManager.GetActiveScene().buildIndex == 9 && currentAudio != ironShrineTheme){
+            currentAudio.Stop();
+            ironShrineTheme.loop = true;
+            currentAudio = ironShrineTheme;
+            currentAudio.Play();
+        }
 
         // Waxwing Mountain
 
@@ -82,7 +88,7 @@ public class AudioManager : MonoBehaviour
     // Prepare all audio to be used in the program
     void LoadAudio(){
         // Change this if loading more audio
-        int numAudio = 11;
+        int numAudio = 12;
 
         for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
@@ -100,6 +106,7 @@ public class AudioManager : MonoBehaviour
         audioList[8].clip = (AudioClip)Resources.Load("Audio/01 Riding dragons");
         audioList[9].clip = (AudioClip)Resources.Load("Audio/Over the Far Hills");
         audioList[10].clip = (AudioClip)Resources.Load("Audio/break");
+        audioList[11].clip = (AudioClip)Resources.Load("Audio/BGM12dungeon1");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -116,6 +123,7 @@ public class AudioManager : MonoBehaviour
         towerTheme = gameObject.GetComponents<AudioSource>()[8];
         ironMtTheme = gameObject.GetComponents<AudioSource>()[9];
         breakSound = gameObject.GetComponents<AudioSource>()[10];
+        ironShrineTheme = gameObject.GetComponents<AudioSource>()[11];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;

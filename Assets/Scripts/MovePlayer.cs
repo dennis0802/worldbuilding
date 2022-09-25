@@ -249,7 +249,7 @@ public class MovePlayer : MonoBehaviour
         // Going into Iron Shrine
         else if(other.gameObject.CompareTag("EnterIron")){
             controller.enabled = false;
-            transform.position = new Vector3(-35, 0, -415);
+            transform.position = new Vector3(-0.5f, 0.5f, 2);
             controller.enabled = true;
             SceneManager.LoadScene(9);
         }     
@@ -257,7 +257,7 @@ public class MovePlayer : MonoBehaviour
         // Exiting Iron Shrine
         else if(other.gameObject.CompareTag("ExitIron")){
             controller.enabled = false;
-            transform.position = new Vector3(-35, 0, -415);
+            transform.position = new Vector3(-553, 125.5f, -191);
             controller.enabled = true;
             SceneManager.LoadScene(7);
         }     
