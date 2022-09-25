@@ -14,6 +14,7 @@ Assets used:
 * Footstep sound from https://mixkit.co/free-sound-effects/footsteps/
 * RPG Adventure Pack by Bakuda Music
 * Stone and Wood Material by Nobiax / Yughues
+* Stylized Brick Materials by Rob Iuo
 
 All images used belong to their respective owners:
 * BG Images from Ori and the Blind Forest/Will of the Wisps
