@@ -26,6 +26,7 @@ TagManager:
   - EnterIron
   - ExitIron
   - RotatingPlatform
+  - Missile
   layers:
   - Default
   - TransparentFX

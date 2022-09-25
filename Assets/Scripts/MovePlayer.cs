@@ -275,6 +275,14 @@ public class MovePlayer : MonoBehaviour
             respawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
 
+        else if(other.gameObject.CompareTag("Missile")){
+            controller.enabled = false;
+            AudioManager.fall.Play();
+            transform.position = respawnLocation;
+            Destroy(other.gameObject);
+            controller.enabled = true;
+        }
+
     }
 
     void Awake(){
