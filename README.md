@@ -1,5 +1,5 @@
 # Worldbuilding
-Experimenting with Unity's terrain tools to create a world
+Experimenting with Unity's terrain tools and C# scripting to create a world
 
 Assets used:
 * ProBuilder
