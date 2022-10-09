@@ -27,6 +27,8 @@ TagManager:
   - ExitIron
   - RotatingPlatform
   - Missile
+  - Clockwise
+  - CounterClock
   layers:
   - Default
   - TransparentFX
