@@ -29,6 +29,8 @@ TagManager:
   - Missile
   - Clockwise
   - CounterClock
+  - PlatformX
+  - PlatformZ
   layers:
   - Default
   - TransparentFX
