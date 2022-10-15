@@ -263,7 +263,8 @@ public class MovePlayer : MonoBehaviour
         }     
 
         // Contacting a death zone (relevant to shrines/dungeons)
-        else if(other.gameObject.CompareTag("DeathZone")){
+        else if(other.gameObject.CompareTag("DeathZone") || other.gameObject.CompareTag("LaserX") || other.gameObject.CompareTag("LaserY") || 
+                other.gameObject.CompareTag("LaserZ")){
             controller.enabled = false;
             AudioManager.fall.Play();
             transform.position = respawnLocation;

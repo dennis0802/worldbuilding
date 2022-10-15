@@ -31,6 +31,12 @@ TagManager:
   - CounterClock
   - PlatformX
   - PlatformZ
+  - PlatformY
+  - LaserY
+  - LaserX
+  - LaserZ
+  - AxeZ
+  - AxeX
   layers:
   - Default
   - TransparentFX
