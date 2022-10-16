@@ -11,7 +11,7 @@ public class IronLauncher : MonoBehaviour
     }
 
     void SpawnMissile(){
-        GameObject newMissile = Instantiate(missile);
+        GameObject newMissile = Instantiate(missile, transform.position, transform.rotation);
         Invoke("SpawnMissile", 5.0f);
     }
 }
