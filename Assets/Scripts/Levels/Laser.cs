@@ -26,52 +26,54 @@ public class Laser : MonoBehaviour
 
     void Update()
     {
-        var step = Time.deltaTime * speed;
-        if(gameObject.tag == "LaserX"){
-            if(transform.position.x >= max.x){
-                goPos = false;
-            }
-            else if(transform.position.x <= min.x){
-                goPos = true;
+        if(!PauseMenu.IsPaused){
+            var step = Time.deltaTime * speed;
+            if(gameObject.tag == "LaserX"){
+                if(transform.position.x >= max.x){
+                    goPos = false;
+                }
+                else if(transform.position.x <= min.x){
+                    goPos = true;
+                }
+
+                if(goPos){
+                    transform.position = Vector3.MoveTowards(transform.position, max, step);
+                }
+                else{
+                    transform.position = Vector3.MoveTowards(transform.position, min, step);
+                }
             }
 
-            if(goPos){
-                transform.position = Vector3.MoveTowards(transform.position, max, step);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, min, step);
-            }
-        }
+            else if(gameObject.tag == "LaserY"){
+                if(transform.position.y >= max.y){
+                    goPos = false;
+                }
+                else if(transform.position.y <= min.y){
+                    goPos = true;
+                }
 
-        else if(gameObject.tag == "LaserY"){
-            if(transform.position.y >= max.y){
-                goPos = false;
+                if(goPos){
+                    transform.position = Vector3.MoveTowards(transform.position, max, step);
+                }
+                else{
+                    transform.position = Vector3.MoveTowards(transform.position, min, step);
+                }
             }
-            else if(transform.position.y <= min.y){
-                goPos = true;
-            }
+            
+            else if(gameObject.tag == "LaserZ"){
+                if(transform.position.z >= max.z){
+                    goPos = false;
+                }
+                else if(transform.position.z <= min.z){
+                    goPos = true;
+                }
 
-            if(goPos){
-                transform.position = Vector3.MoveTowards(transform.position, max, step);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, min, step);
-            }
-        }
-        
-        else if(gameObject.tag == "LaserZ"){
-            if(transform.position.z >= max.z){
-                goPos = false;
-            }
-            else if(transform.position.z <= min.z){
-                goPos = true;
-            }
-
-            if(goPos){
-                transform.position = Vector3.MoveTowards(transform.position, max, step);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, min, step);
+                if(goPos){
+                    transform.position = Vector3.MoveTowards(transform.position, max, step);
+                }
+                else{
+                    transform.position = Vector3.MoveTowards(transform.position, min, step);
+                }
             }
         }
     }

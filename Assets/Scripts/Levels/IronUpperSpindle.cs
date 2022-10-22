@@ -8,12 +8,15 @@ public class IronUpperSpindle : MonoBehaviour
 
     void Update()
     {
-        if(active){
-            transform.Rotate(0.0f, 0.1f, 0.0f, Space.Self); 
-        }
-        // Reset back to original rotation
-        else{
+        if(!PauseMenu.IsPaused){
+            if(active){
+                transform.Rotate(0.0f, 0.1f, 0.0f, Space.Self); 
+            }
+            // Reset back to original rotation
+            else{
 
+            }
         }
+
     }
 }

@@ -119,7 +119,7 @@ public class MovePlayer : MonoBehaviour
         if(waveAction.triggered && groundedPlayer){
             animator.CrossFade(waveAnimation, animationPlayTransition);
         }
-
+        // Picking up
         if(pickUpAction.triggered && groundedPlayer){
             animator.CrossFade(pickUpAnimation, animationPlayTransition);
         }
@@ -131,11 +131,13 @@ public class MovePlayer : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        // Falling out of bounds
+        // Falling out of bounds - replaced with death zone triggers as of Oct 22, 2022
+        /*
         if(transform.position.y < -10){
             AudioManager.fall.Play();
             transform.position = respawnLocation;
         }
+        */
 
         if(SceneManager.GetActiveScene().buildIndex == 1){
             Destroy(gameObject);

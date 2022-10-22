@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 537122905895699076}
   - component: {fileID: 4277471237025035533}
   - component: {fileID: 8498924020513584582}
-  - component: {fileID: 5852052323236402723}
+  - component: {fileID: 1808434523101379382}
   m_Layer: 6
   m_Name: ReturnPortal
   m_TagString: EnterIron
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5852052323236402723
-MeshCollider:
+--- !u!65 &1808434523101379382
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,10 +94,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.7374833, y: 20, z: 0.70775855}
+  m_Center: {x: -0.010694504, y: 0, z: -0.012985039}
 --- !u!1 &7989836265836360656
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,36 +22,38 @@ public class IronPlatform : MonoBehaviour
 
     void Update()
     {
-        var step = Time.deltaTime * speed;
-        if(gameObject.tag == "PlatformX"){
-            if(transform.position.x >= max.x){
-                goPos = false;
-            }
-            else if(transform.position.x <= min.x){
-                goPos = true;
+        if(!PauseMenu.IsPaused){
+            var step = Time.deltaTime * speed;
+            if(gameObject.tag == "PlatformX"){
+                if(transform.position.x >= max.x){
+                    goPos = false;
+                }
+                else if(transform.position.x <= min.x){
+                    goPos = true;
+                }
+
+                if(goPos){
+                    transform.position = Vector3.MoveTowards(transform.position, max, step);
+                }
+                else{
+                    transform.position = Vector3.MoveTowards(transform.position, min, step);
+                }
             }
 
-            if(goPos){
-                transform.position = Vector3.MoveTowards(transform.position, max, step);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, min, step);
-            }
-        }
+            else if(gameObject.tag == "PlatformZ"){
+                if(transform.position.z >= max.z){
+                    goPos = false;
+                }
+                else if(transform.position.z <= min.z){
+                    goPos = true;
+                }
 
-        else if(gameObject.tag == "PlatformZ"){
-            if(transform.position.z >= max.z){
-                goPos = false;
-            }
-            else if(transform.position.z <= min.z){
-                goPos = true;
-            }
-
-            if(goPos){
-                transform.position = Vector3.MoveTowards(transform.position, max, step);
-            }
-            else{
-                transform.position = Vector3.MoveTowards(transform.position, min, step);
+                if(goPos){
+                    transform.position = Vector3.MoveTowards(transform.position, max, step);
+                }
+                else{
+                    transform.position = Vector3.MoveTowards(transform.position, min, step);
+                }
             }
         }
     }

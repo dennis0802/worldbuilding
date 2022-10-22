@@ -6,11 +6,13 @@ public class GearRotation : MonoBehaviour
 {
     void Update()
     {
-        if(gameObject.tag == "Clockwise"){
-            transform.Rotate(0.0f, 0.5f, 0.0f, Space.Self); 
-        }
-        else if(gameObject.tag == "CounterClock"){
-            transform.Rotate(0.0f, -0.5f, 0.0f, Space.Self); 
+        if(!PauseMenu.IsPaused){
+            if(gameObject.tag == "Clockwise"){
+                transform.Rotate(0.0f, 0.5f, 0.0f, Space.Self); 
+            }
+            else if(gameObject.tag == "CounterClock"){
+                transform.Rotate(0.0f, -0.5f, 0.0f, Space.Self); 
+            }
         }
     }
 
