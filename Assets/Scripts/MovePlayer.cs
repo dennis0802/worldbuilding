@@ -17,7 +17,7 @@ public class MovePlayer : MonoBehaviour
     private float stepCooldown, stepRate = 0.5f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
-    private bool groundedPlayer, isRunning, parentChanged;
+    private bool groundedPlayer, isRunning, parentChanged, onConveyor;
     [SerializeField]
     private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
                   animationSmoothTime = 0.1f, animationPlayTransition = 0.15f, forceMagnitude = 1.0f;
@@ -324,6 +324,32 @@ public class MovePlayer : MonoBehaviour
             transform.parent = null;
             DontDestroyOnLoad(gameObject);
             parentChanged = false;
+        }
+
+        // Conveyor belts
+        if(hit.gameObject.tag == "ConveyorPosX"){
+            playerVelocity.x = hit.gameObject.GetComponent<ConveyorBelt>().speed/75;
+            onConveyor = true;
+        }
+
+        else if(hit.gameObject.tag == "ConveyorNegX"){
+            playerVelocity.x = hit.gameObject.GetComponent<ConveyorBelt>().speed * -1.0f/75;
+            onConveyor = true;
+        }
+
+        else if(hit.gameObject.tag == "ConveyorPosZ"){
+            playerVelocity.z = hit.gameObject.GetComponent<ConveyorBelt>().speed/75;
+            onConveyor = true;
+        }
+
+        else if(hit.gameObject.tag == "ConveyorNegZ"){
+            playerVelocity.z = hit.gameObject.GetComponent<ConveyorBelt>().speed * -1.0f/75;
+            onConveyor = true;
+        }
+        else if(onConveyor){
+            playerVelocity.x = 0.0f;
+            playerVelocity.z = 0.0f;
+            onConveyor = false;
         }
 
         Rigidbody r = hit.collider.attachedRigidbody;

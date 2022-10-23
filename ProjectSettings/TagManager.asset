@@ -37,6 +37,11 @@ TagManager:
   - LaserZ
   - AxeZ
   - AxeX
+  - ConveyorPosX
+  - ConveyorNegX
+  - ConveyorPosZ
+  - ConveyorNegZ
+  - Conveyor
   layers:
   - Default
   - TransparentFX
