@@ -42,6 +42,7 @@ TagManager:
   - ConveyorPosZ
   - ConveyorNegZ
   - Conveyor
+  - IronComplete
   layers:
   - Default
   - TransparentFX

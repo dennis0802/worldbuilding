@@ -8,13 +8,14 @@ public class Platform : MonoBehaviour
     // Auto Sync Transforms must be used to work with CharacterControllers
     void OnTriggerEnter(Collider other){
         if(other.transform.tag == "Player"){
-            other.transform.parent = transform;
+            other.transform.SetParent(transform, true);
         }
     }
 
     void OnTriggerExit(Collider other){
         if(other.transform.tag == "Player"){
-            other.transform.parent = null;
+            other.transform.SetParent(null);
+            other.transform.localScale = new Vector3(1,1,1);
             DontDestroyOnLoad(other);
         }
     }

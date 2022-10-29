@@ -262,7 +262,16 @@ public class MovePlayer : MonoBehaviour
             transform.position = new Vector3(-553, 125.5f, -191);
             controller.enabled = true;
             SceneManager.LoadScene(7);
-        }     
+        }
+
+        // Exiting Iron Shrine via completion
+        else if(other.gameObject.CompareTag("IronComplete")){
+            controller.enabled = false;
+            transform.position = new Vector3(-553, 125.5f, -191);
+            controller.enabled = true;
+            AudioManager.complete.Play();
+            SceneManager.LoadScene(7);
+        }      
 
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone") || other.gameObject.CompareTag("LaserX") || other.gameObject.CompareTag("LaserY") || 
