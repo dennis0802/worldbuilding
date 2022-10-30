@@ -282,6 +282,27 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
         }
 
+        // Key collectables
+        else if(other.gameObject.CompareTag("Key")){
+            AudioManager.complete.Play();
+            other.gameObject.SetActive(false);
+        }
+
+        else if(other.gameObject.CompareTag("KeyFragment")){
+            AudioManager.complete.Play();
+            other.gameObject.SetActive(false);
+        }
+
+        else if(other.gameObject.CompareTag("ClockwiseGear")){
+            AudioManager.complete.Play();
+            other.gameObject.SetActive(false);
+        }
+
+        else if(other.gameObject.CompareTag("CounterClockwiseGear")){
+            AudioManager.complete.Play();
+            other.gameObject.SetActive(false);
+        }
+
         // Reassign respawn point (relevant to dungeons and death zones)
         else if(other.gameObject.CompareTag("Checkpoint")){
             respawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);

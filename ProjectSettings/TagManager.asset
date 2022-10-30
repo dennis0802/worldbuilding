@@ -43,6 +43,11 @@ TagManager:
   - ConveyorNegZ
   - Conveyor
   - IronComplete
+  - Key
+  - KeyFragment
+  - BossKey
+  - ClockwiseGear
+  - CounterClockGear
   layers:
   - Default
   - TransparentFX

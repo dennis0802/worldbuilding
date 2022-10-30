@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class IronLowerSpindle : MonoBehaviour 
 {
-    public static bool active = true;
+    [SerializeField]
+    public bool active = false;
+    public Quaternion startRot;
+
+    void Start(){
+        startRot = transform.rotation;
+    }
 
     void Update()
     {
@@ -14,7 +20,7 @@ public class IronLowerSpindle : MonoBehaviour
             }
             // Reset back to original rotation
             else{
-                
+                transform.rotation = Quaternion.Lerp(transform.rotation, startRot, Time.time * 0.0009f);
             }
         }
     }
