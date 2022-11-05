@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MovePlayer : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class MovePlayer : MonoBehaviour
 
     public Transform groundCheck;
     public LayerMask groundMask;
+    public TextMeshProUGUI keyText;
+    public static int numKeys;
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
     // Running feature based off of: https://www.youtube.com/watch?v=UqLl53ZPNfo
@@ -50,6 +53,7 @@ public class MovePlayer : MonoBehaviour
         waveAnimation = Animator.StringToHash("Waving");
         pickUpAnimation = Animator.StringToHash("PickUp");
 
+        numKeys = 0;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -253,6 +257,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(-0.5f, 0.5f, 2);
             controller.enabled = true;
+            SetKeyCounter();
             SceneManager.LoadScene(9);
         }     
 
@@ -261,6 +266,8 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(-553, 125.5f, -191);
             controller.enabled = true;
+            keyText.text = "";
+            numKeys = 0;
             SceneManager.LoadScene(7);
         }
 
@@ -285,7 +292,9 @@ public class MovePlayer : MonoBehaviour
         // Key collectables
         else if(other.gameObject.CompareTag("Key")){
             AudioManager.complete.Play();
+            numKeys++;
             other.gameObject.SetActive(false);
+            SetKeyCounter();
         }
 
         else if(other.gameObject.CompareTag("KeyFragment")){
@@ -298,7 +307,7 @@ public class MovePlayer : MonoBehaviour
             other.gameObject.SetActive(false);
         }
 
-        else if(other.gameObject.CompareTag("CounterClockwiseGear")){
+        else if(other.gameObject.CompareTag("CounterClockGear")){
             AudioManager.complete.Play();
             other.gameObject.SetActive(false);
         }
@@ -315,6 +324,27 @@ public class MovePlayer : MonoBehaviour
             Destroy(other.gameObject);
             controller.enabled = true;
         }
+        // Locked doors
+        else if(other.gameObject.CompareTag("LockedDoor")){
+            bool locked = other.gameObject.GetComponent<LockedDoor>().locked;
+
+            // Check for sufficient keys and the door is locked
+            if(numKeys > 0 && locked){
+                numKeys--;
+                Debug.Log("You unlocked a door! You now have " + numKeys + " keys.");
+
+                // Unlock all associated doors with the doorway
+                List<Rigidbody> doors = other.gameObject.GetComponent<LockedDoor>().doors;
+                foreach(Rigidbody door in doors){
+                    door.constraints = RigidbodyConstraints.None;
+                }
+                other.gameObject.GetComponent<LockedDoor>().locked = false;
+            }
+            // If the door is locked but no keys, play a sound to indicate
+            else if(locked){
+                // Play locked door sound
+            }
+        }
 
     }
 
@@ -328,6 +358,10 @@ public class MovePlayer : MonoBehaviour
         else if(instance != this){
             Destroy(gameObject);
         }
+    }
+
+    void SetKeyCounter(){
+        keyText.text = "Keys: " + numKeys.ToString();
     }
 
     void PressSprint(){

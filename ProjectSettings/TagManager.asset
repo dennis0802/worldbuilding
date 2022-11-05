@@ -48,6 +48,7 @@ TagManager:
   - BossKey
   - ClockwiseGear
   - CounterClockGear
+  - LockedDoor
   layers:
   - Default
   - TransparentFX
