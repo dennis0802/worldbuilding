@@ -19,14 +19,15 @@ public class MovePlayer : MonoBehaviour
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
     private bool groundedPlayer, isRunning, parentChanged, onConveyor;
+    public static bool ironShrineDone, hasClockwiseGear, hasCounterGear;
     [SerializeField]
     private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
                   animationSmoothTime = 0.1f, animationPlayTransition = 0.15f, forceMagnitude = 1.0f;
 
     public Transform groundCheck;
     public LayerMask groundMask;
-    public TextMeshProUGUI keyText;
-    public static int numKeys;
+    public TextMeshProUGUI keyText, specialText;
+    public static int numKeys, numBigKeys, numFragments;
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
     // Running feature based off of: https://www.youtube.com/watch?v=UqLl53ZPNfo
@@ -53,7 +54,7 @@ public class MovePlayer : MonoBehaviour
         waveAnimation = Animator.StringToHash("Waving");
         pickUpAnimation = Animator.StringToHash("PickUp");
 
-        numKeys = 0;
+        numKeys = 0; numBigKeys = 0; numFragments = 0;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -164,6 +165,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(5);
         }
+
         // Going from Witcher's Tower to Chio Plains
         else if(other.gameObject.CompareTag("TowerToPlains")){
             controller.enabled = false;
@@ -173,6 +175,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(3);
         }
+
         // Going inside the tower from ground floor
         else if(other.gameObject.CompareTag("IntoGroundFloorTower")){
             controller.enabled = false;
@@ -180,6 +183,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(6);
         }
+
         // Going out the tower on ground floor
         else if(other.gameObject.CompareTag("ExitGroundFloor")){
             controller.enabled = false;
@@ -187,6 +191,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(5);
         }
+
         // Going to tower top
         else if(other.gameObject.CompareTag("EnterTowerTop")){
             controller.enabled = false;
@@ -194,6 +199,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(5);
         }
+
         // Going back in tower from top
         else if(other.gameObject.CompareTag("ExitTowerTop")){
             controller.enabled = false;
@@ -201,6 +207,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = true;
             SceneManager.LoadScene(6);
         }
+
         // Going from plains to Iron Mountain
         else if(other.gameObject.CompareTag("PlainsToIron")){
             controller.enabled = false;
@@ -210,6 +217,7 @@ public class MovePlayer : MonoBehaviour
             AudioManager.plainsTheme.Stop();
             SceneManager.LoadScene(7);
         }
+
         // Going from Iron Mountain to plains
         else if(other.gameObject.CompareTag("IronToPlains")){
             controller.enabled = false;
@@ -266,8 +274,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(-553, 125.5f, -191);
             controller.enabled = true;
-            keyText.text = "";
-            numKeys = 0;
+            ExitDungeon();
             SceneManager.LoadScene(7);
         }
 
@@ -276,6 +283,7 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = false;
             transform.position = new Vector3(-553, 125.5f, -191);
             controller.enabled = true;
+            ironShrineDone = true;
             AudioManager.complete.Play();
             SceneManager.LoadScene(7);
         }      
@@ -297,18 +305,42 @@ public class MovePlayer : MonoBehaviour
             SetKeyCounter();
         }
 
+        // Key fragments
         else if(other.gameObject.CompareTag("KeyFragment")){
-            AudioManager.complete.Play();
+            numFragments++;
+            if(numFragments == 2){
+                // Complete key
+                AudioManager.complete.Play();
+                numBigKeys++;
+                specialText.text = "Big Keys: " + numBigKeys;  
+                numFragments = 0;
+            }
+            else{
+                // Partially complete
+                specialText.text = "Fragments: " + numBigKeys; 
+            }
             other.gameObject.SetActive(false);
         }
 
+        // Boss/big key
+        else if(other.gameObject.CompareTag("BossKey")){
+            AudioManager.complete.Play();
+            numBigKeys++;
+            specialText.text = "Fragments: " + numBigKeys; 
+            other.gameObject.SetActive(false);
+        }
+
+        // Iron Shrine - clockwise gear
         else if(other.gameObject.CompareTag("ClockwiseGear")){
             AudioManager.complete.Play();
+            hasClockwiseGear = true;
             other.gameObject.SetActive(false);
         }
 
+        // Iron Shrine - counter clockwise gear
         else if(other.gameObject.CompareTag("CounterClockGear")){
             AudioManager.complete.Play();
+            hasCounterGear = true;
             other.gameObject.SetActive(false);
         }
 
@@ -317,6 +349,7 @@ public class MovePlayer : MonoBehaviour
             respawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
 
+        // Missiles - still need to fine-tune
         else if(other.gameObject.CompareTag("Missile")){
             controller.enabled = false;
             AudioManager.fall.Play();
@@ -324,6 +357,7 @@ public class MovePlayer : MonoBehaviour
             Destroy(other.gameObject);
             controller.enabled = true;
         }
+
         // Locked doors
         else if(other.gameObject.CompareTag("LockedDoor")){
             bool locked = other.gameObject.GetComponent<LockedDoor>().locked;
@@ -331,6 +365,7 @@ public class MovePlayer : MonoBehaviour
             // Check for sufficient keys and the door is locked
             if(numKeys > 0 && locked){
                 numKeys--;
+                SetKeyCounter();
                 Debug.Log("You unlocked a door! You now have " + numKeys + " keys.");
 
                 // Unlock all associated doors with the doorway
@@ -338,7 +373,9 @@ public class MovePlayer : MonoBehaviour
                 foreach(Rigidbody door in doors){
                     door.constraints = RigidbodyConstraints.None;
                 }
+                other.gameObject.GetComponent<LockedDoor>().padlock.SetActive(false);
                 other.gameObject.GetComponent<LockedDoor>().locked = false;
+                // Play unlock sound
             }
             // If the door is locked but no keys, play a sound to indicate
             else if(locked){
@@ -346,6 +383,81 @@ public class MovePlayer : MonoBehaviour
             }
         }
 
+        // Big doors
+        else if(other.gameObject.CompareTag("LockedBigDoor")){
+            bool locked = other.gameObject.GetComponent<LockedDoor>().locked;
+
+            // Check for sufficient keys and the door is locked
+            if(numBigKeys > 0 && locked){
+                numBigKeys--;
+                specialText.text = "";
+                Debug.Log("You unlocked a door! You now have " + numKeys + " keys.");
+
+                // Unlock all associated doors with the doorway
+                List<Rigidbody> doors = other.gameObject.GetComponent<LockedDoor>().doors;
+                foreach(Rigidbody door in doors){
+                    door.constraints = RigidbodyConstraints.None;
+                }
+                other.gameObject.GetComponent<LockedDoor>().padlock.SetActive(false);
+                other.gameObject.GetComponent<LockedDoor>().locked = false;
+                // Play unlock sound
+            }
+            // If the door is locked but no big keys, play a sound to indicate
+            else if(locked){
+                // Play big locked door sound
+            }
+        }
+
+        // Iron Shrine - Circuit machines
+        else if(other.gameObject.CompareTag("CircuitMachine")){
+            // Check for machine type
+            bool machineType = other.gameObject.GetComponent<CircuitMachine>().partOfCircuit;
+            // Check for order if a circuit
+            if(machineType){
+                // First machine
+                if(other.gameObject.GetComponent<CircuitMachine>().firstMachine){
+                    List<Renderer> wires = other.gameObject.GetComponent<CircuitMachine>().wires;
+                    foreach(Renderer wire in wires){
+                        wire.material.color = Color.cyan;
+                    }
+                    other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
+                    other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
+                    // Play power on sound
+                }
+                // Mid and last
+                else if(!other.gameObject.GetComponent<CircuitMachine>().lastMachine){
+                    CircuitMachine currentMachine = other.gameObject.GetComponent<CircuitMachine>();
+                    // If the listed previous machine is on, turn on the current machine
+                    if(currentMachine.previousMachine.GetComponent<CircuitMachine>().powerOn){
+                        if(other.gameObject.GetComponent<CircuitMachine>().firstMachine){
+                            List<Renderer> wires = other.gameObject.GetComponent<CircuitMachine>().wires;
+                            foreach(Renderer wire in wires){
+                                wire.material.color = Color.cyan;
+                            }
+                            other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
+                            other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
+
+                            // Disable the force field if last machine
+                            if(currentMachine.lastMachine){
+                                other.gameObject.GetComponent<CircuitMachine>().forceField.SetActive(false);
+                            }
+                            // Play power on sound
+                        }
+                    }
+                }
+            }
+            // Turn on as usual
+            else{
+                List<Renderer> wires = other.gameObject.GetComponent<CircuitMachine>().wires;
+                foreach(Renderer wire in wires){
+                    wire.material.color = Color.cyan;
+                }
+                other.gameObject.GetComponent<CircuitMachine>().forceField.SetActive(false);
+                other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
+                other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
+                // Play power on sound
+            }
+        }
     }
 
     void Awake(){
@@ -362,6 +474,14 @@ public class MovePlayer : MonoBehaviour
 
     void SetKeyCounter(){
         keyText.text = "Keys: " + numKeys.ToString();
+    }
+
+    void ExitDungeon(){
+        keyText.text = "";
+        specialText.text = "";
+        numKeys = 0;
+        numBigKeys = 0;
+        numFragments = 0;
     }
 
     void PressSprint(){

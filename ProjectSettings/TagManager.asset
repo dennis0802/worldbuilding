@@ -49,6 +49,8 @@ TagManager:
   - ClockwiseGear
   - CounterClockGear
   - LockedDoor
+  - LockedBigDoor
+  - CircuitMachine
   layers:
   - Default
   - TransparentFX
