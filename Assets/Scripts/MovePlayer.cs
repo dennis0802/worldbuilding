@@ -26,7 +26,7 @@ public class MovePlayer : MonoBehaviour
 
     public Transform groundCheck;
     public LayerMask groundMask;
-    public TextMeshProUGUI keyText, specialText;
+    public TextMeshProUGUI keyText, specialText, interactText;
     public static int numKeys, numBigKeys, numFragments;
 
     // Based off of: https://www.youtube.com/watch?v=SeBEvM2zMpY
@@ -317,7 +317,8 @@ public class MovePlayer : MonoBehaviour
             }
             else{
                 // Partially complete
-                specialText.text = "Fragments: " + numBigKeys; 
+                AudioManager.complete.Play();
+                specialText.text = "Fragments: " + numFragments; 
             }
             other.gameObject.SetActive(false);
         }
@@ -326,7 +327,7 @@ public class MovePlayer : MonoBehaviour
         else if(other.gameObject.CompareTag("BossKey")){
             AudioManager.complete.Play();
             numBigKeys++;
-            specialText.text = "Fragments: " + numBigKeys; 
+            specialText.text = "Big Keys: " + numBigKeys; 
             other.gameObject.SetActive(false);
         }
 
@@ -334,6 +335,7 @@ public class MovePlayer : MonoBehaviour
         else if(other.gameObject.CompareTag("ClockwiseGear")){
             AudioManager.complete.Play();
             hasClockwiseGear = true;
+            specialText.text = "Carrying clockwise gear";  
             other.gameObject.SetActive(false);
         }
 
@@ -341,6 +343,7 @@ public class MovePlayer : MonoBehaviour
         else if(other.gameObject.CompareTag("CounterClockGear")){
             AudioManager.complete.Play();
             hasCounterGear = true;
+            specialText.text = "Carrying counter-clockwise gear";  
             other.gameObject.SetActive(false);
         }
 
@@ -375,11 +378,11 @@ public class MovePlayer : MonoBehaviour
                 }
                 other.gameObject.GetComponent<LockedDoor>().padlock.SetActive(false);
                 other.gameObject.GetComponent<LockedDoor>().locked = false;
-                // Play unlock sound
+                AudioManager.unlock.Play();
             }
             // If the door is locked but no keys, play a sound to indicate
             else if(locked){
-                // Play locked door sound
+                AudioManager.smallLock.Play();
             }
         }
 
@@ -400,16 +403,17 @@ public class MovePlayer : MonoBehaviour
                 }
                 other.gameObject.GetComponent<LockedDoor>().padlock.SetActive(false);
                 other.gameObject.GetComponent<LockedDoor>().locked = false;
-                // Play unlock sound
+                AudioManager.unlock.Play();
             }
             // If the door is locked but no big keys, play a sound to indicate
             else if(locked){
-                // Play big locked door sound
+                AudioManager.bigLock.Play();
             }
         }
 
         // Iron Shrine - Circuit machines
         else if(other.gameObject.CompareTag("CircuitMachine")){
+            Debug.Log("Contacted circuit machine");
             // Check for machine type
             bool machineType = other.gameObject.GetComponent<CircuitMachine>().partOfCircuit;
             // Check for order if a circuit
@@ -422,27 +426,26 @@ public class MovePlayer : MonoBehaviour
                     }
                     other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
                     other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
-                    // Play power on sound
+                    AudioManager.machine.Play();
                 }
                 // Mid and last
-                else if(!other.gameObject.GetComponent<CircuitMachine>().lastMachine){
+                else{
                     CircuitMachine currentMachine = other.gameObject.GetComponent<CircuitMachine>();
+                    Debug.Log(currentMachine.previousMachine.GetComponent<CircuitMachine>().powerOn);
                     // If the listed previous machine is on, turn on the current machine
                     if(currentMachine.previousMachine.GetComponent<CircuitMachine>().powerOn){
-                        if(other.gameObject.GetComponent<CircuitMachine>().firstMachine){
-                            List<Renderer> wires = other.gameObject.GetComponent<CircuitMachine>().wires;
-                            foreach(Renderer wire in wires){
-                                wire.material.color = Color.cyan;
-                            }
-                            other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
-                            other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
-
-                            // Disable the force field if last machine
-                            if(currentMachine.lastMachine){
-                                other.gameObject.GetComponent<CircuitMachine>().forceField.SetActive(false);
-                            }
-                            // Play power on sound
+                        List<Renderer> wires = other.gameObject.GetComponent<CircuitMachine>().wires;
+                        foreach(Renderer wire in wires){
+                            wire.material.color = Color.cyan;
                         }
+                        other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
+                        other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
+
+                        // Disable the force field if last machine
+                        if(currentMachine.lastMachine){
+                            other.gameObject.GetComponent<CircuitMachine>().forceField.SetActive(false);
+                        }
+                        AudioManager.machine.Play();
                     }
                 }
             }
@@ -455,7 +458,41 @@ public class MovePlayer : MonoBehaviour
                 other.gameObject.GetComponent<CircuitMachine>().forceField.SetActive(false);
                 other.gameObject.GetComponent<CircuitMachine>().lightSwitch.material.color = Color.green;
                 other.gameObject.GetComponent<CircuitMachine>().powerOn = true;
-                // Play power on sound
+                AudioManager.machine.Play();
+            }
+        }
+
+        // Iron Shrine - Gear machines
+        else if(other.gameObject.CompareTag("GearSwitch") && (hasClockwiseGear || hasCounterGear)){
+            // Big lock sound also sounds like slotting in a gear
+            AudioManager.bigLock.Play();
+            other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
+            if(hasClockwiseGear){
+                hasClockwiseGear = false;
+            }
+            else{
+                hasCounterGear = false;
+            }
+        }
+    }
+
+    void OnTriggerStay(Collider other){
+        // Staying in range of the gear switch
+        if(other.gameObject.CompareTag("GearSwitch")){
+            interactText.text = "Left-click to interact with the gear switch.";
+            //if left click, change the gear state
+            if(true){
+                AudioManager.machine.Play();
+                other.gameObject.GetComponent<GearSwitch>().on = !other.gameObject.GetComponent<GearSwitch>().on;
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+        // Exiting range of the gear switch
+        if(other.gameObject.CompareTag("GearSwitch")){
+            if(!string.IsNullOrWhiteSpace(interactText.text)){
+                interactText.text = "";
             }
         }
     }

@@ -51,6 +51,9 @@ TagManager:
   - LockedDoor
   - LockedBigDoor
   - CircuitMachine
+  - GearSwitch
+  - UpperSpindle
+  - LowerSpindle
   layers:
   - Default
   - TransparentFX

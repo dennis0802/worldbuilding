@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
-    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrineTheme;
+    public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrineTheme,
+                              bigLock, smallLock, machine, unlock;
     public static AudioSource currentAudio = null;
+    private const int numAudio = 16;
     
     // Start is called before the first frame update
     void Start()
@@ -87,9 +89,14 @@ public class AudioManager : MonoBehaviour
 
     // Prepare all audio to be used in the program
     void LoadAudio(){
-        // Change this if loading more audio
-        int numAudio = 12;
-
+        /*
+            Clean this up later with the following bit of code:
+            string audioFiles = Directory.GetFiles("Resources/Audio");
+            foreach(string file in audioFiles){
+                gameObject.AddComponent<AudioSource>();
+                audioList...
+            }
+        */
         for(int i = 0; i < numAudio; i++){
             gameObject.AddComponent<AudioSource>();
         }
@@ -107,6 +114,10 @@ public class AudioManager : MonoBehaviour
         audioList[9].clip = (AudioClip)Resources.Load("Audio/Over the Far Hills");
         audioList[10].clip = (AudioClip)Resources.Load("Audio/break");
         audioList[11].clip = (AudioClip)Resources.Load("Audio/BGM12dungeon1");
+        audioList[12].clip = (AudioClip)Resources.Load("Audio/bigLock");
+        audioList[13].clip = (AudioClip)Resources.Load("Audio/smallLock");
+        audioList[14].clip = (AudioClip)Resources.Load("Audio/unlock");
+        audioList[15].clip = (AudioClip)Resources.Load("Audio/machine");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -124,6 +135,10 @@ public class AudioManager : MonoBehaviour
         ironMtTheme = gameObject.GetComponents<AudioSource>()[9];
         breakSound = gameObject.GetComponents<AudioSource>()[10];
         ironShrineTheme = gameObject.GetComponents<AudioSource>()[11];
+        bigLock = gameObject.GetComponents<AudioSource>()[12];
+        smallLock = gameObject.GetComponents<AudioSource>()[13];
+        unlock = gameObject.GetComponents<AudioSource>()[14];
+        machine = gameObject.GetComponents<AudioSource>()[15];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;

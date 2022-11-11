@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 public class GearSwitch : MonoBehaviour
 {
-    public List<Renderer> wires = new List<Renderer>();
-    public bool partOfCircuit, firstMachine, lastMachine, powerOn = false;
-    public GameObject forceField, previousMachine;
-    public Renderer lightSwitch;
+    public bool clockwise = false, on = false; 
+    public GameObject opposingMachine, gear;
+
+    void Update(){
+        // Automatically turn off if the opposing machine was turned on
+        if(opposingMachine.GetComponent<GearSwitch>().on){
+            on = !on;
+        }
+    }
 }
