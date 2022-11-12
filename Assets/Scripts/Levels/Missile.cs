@@ -4,35 +4,51 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour 
 {
+    public GameObject missileScanner;
     private GameObject target;
+    private Vector3 direction;
+    // speed was 20
+    private float speed = 1.0f, rotationSpeed = 4.0f, focusDistance = 5.0f;
+    private Vector3 lastPos;
+    private bool lookingAtTarget = true;
 
     void Start()
     {
-        target = GameObject.FindWithTag("Player");
+        lastPos = transform.position;
     }
 
     void Update()
     {
-        var speedStep = 10.0f * Time.deltaTime;
-        var rotStep = 40.0f * Time.deltaTime;
+        // Scanning
+        target = missileScanner.GetComponent<MissileScan>().target;
 
-        // Move forward
-        transform.Translate(Vector3.forward * speedStep);
+        // Movement
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        lastPos = transform.position;
 
-        // Target if exists
+        // Rotation
         if(target != null){
-            Vector3 targetDir = target.transform.position - transform.position;
-            targetDir.y = -0.1f;
-            targetDir = targetDir.normalized;
-            var rot = Quaternion.LookRotation(targetDir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotStep);
+            direction = target.transform.position - transform.position;
+            direction.y = 0.01f;
+            direction = direction.normalized;
+
+            var rot = Quaternion.LookRotation(direction);
+
+            // When within a certain distance to the player, stop focusing and continue current trajectory
+            if(Vector3.Distance(transform.position, target.transform.position) < focusDistance){
+                lookingAtTarget = false;
+            }
+            if(lookingAtTarget){
+                transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
     void OnTriggerEnter(Collider col){
-        Debug.Log("collision detected");
+        // For this to work, the environment tagged objects (likely walls, doors, and etc.) need to be kinematic rigidbodies to register
         if(col.CompareTag("Environment")){
-            Debug.Log("Collided with environment");
+            // Play explosion sound
+            Debug.Log("Collided with " + col.gameObject);
             Destroy(gameObject);
         }
     }

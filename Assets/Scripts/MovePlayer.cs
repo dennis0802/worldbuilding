@@ -15,11 +15,11 @@ public class MovePlayer : MonoBehaviour
     private Transform cameraTransform;
     private static MovePlayer instance;
     private Animator animator;
-    private float stepCooldown, stepRate = 0.5f;
+    private float stepCooldown, stepRate = 0.5f, waveCooldown = 0f, pickUpCooldown = 0f;
     private int moveXAnimationParameterId, moveZAnimationParameterId, jumpAnimation, landAnimation, fallAnimation, 
                 runAnimation, basicAnimation, waveAnimation, pickUpAnimation;
-    private bool groundedPlayer, isRunning, parentChanged, onConveyor;
-    public static bool ironShrineDone, hasClockwiseGear, hasCounterGear;
+    private bool groundedPlayer, isRunning, parentChanged, onConveyor, hasClockwiseGear, hasCounterGear;
+    public static bool ironShrineDone;
     [SerializeField]
     private float playerSpeed = 4.0f, jumpHeight = 2.0f, gravityValue = -9.81f, rotationSpeed = 3.0f, 
                   animationSmoothTime = 0.1f, animationPlayTransition = 0.15f, forceMagnitude = 1.0f;
@@ -64,6 +64,8 @@ public class MovePlayer : MonoBehaviour
         groundedPlayer = controller.isGrounded;
         animator.SetBool("IsGrounded", groundedPlayer);
         stepCooldown -= Time.deltaTime;
+        waveCooldown -= Time.deltaTime;
+        pickUpCooldown -= Time.deltaTime;
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -101,32 +103,35 @@ public class MovePlayer : MonoBehaviour
                     stepCooldown = 0.25f;
                 }
             }
+
+            // Jumping
+            if(jumpAction.triggered && groundedPlayer){
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+                animator.CrossFade(jumpAnimation, animationPlayTransition);
+                AudioManager.jump.Play();
+                
+                if(parentChanged){
+                    transform.parent = null;
+                    DontDestroyOnLoad(gameObject);
+                    parentChanged = false;
+                }
+            }
         }
 
         // Animation
         animator.SetFloat(moveXAnimationParameterId, currentAnimationBlendVector.x);
         animator.SetFloat(moveZAnimationParameterId, currentAnimationBlendVector.y);
 
-        // Jumping
-        if(jumpAction.triggered && groundedPlayer){
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-            animator.CrossFade(jumpAnimation, animationPlayTransition);
-            AudioManager.jump.Play();
-            
-            if(parentChanged){
-                transform.parent = null;
-                DontDestroyOnLoad(gameObject);
-                parentChanged = false;
-            }
-        }
-
+        // Cooldowns will prevent left click and waving spam
         // Waving
-        if(waveAction.triggered && groundedPlayer){
+        if(waveAction.triggered && groundedPlayer & waveCooldown < 0.0f){
             animator.CrossFade(waveAnimation, animationPlayTransition);
+            waveCooldown = 2.5f;
         }
         // Picking up
-        if(pickUpAction.triggered && groundedPlayer){
+        if(pickUpAction.triggered && groundedPlayer && pickUpCooldown < 0.0f){
             animator.CrossFade(pickUpAnimation, animationPlayTransition);
+            pickUpCooldown = 2f;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -137,12 +142,7 @@ public class MovePlayer : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         // Falling out of bounds - replaced with death zone triggers as of Oct 22, 2022
-        /*
-        if(transform.position.y < -10){
-            AudioManager.fall.Play();
-            transform.position = respawnLocation;
-        }
-        */
+        /*if(transform.position.y < -10){AudioManager.fall.Play();transform.position = respawnLocation;}*/
 
         if(SceneManager.GetActiveScene().buildIndex == 1){
             Destroy(gameObject);
@@ -290,10 +290,17 @@ public class MovePlayer : MonoBehaviour
 
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone") || other.gameObject.CompareTag("LaserX") || other.gameObject.CompareTag("LaserY") || 
-                other.gameObject.CompareTag("LaserZ")){
+                other.gameObject.CompareTag("LaserZ") || other.gameObject.CompareTag("Missile")){
             controller.enabled = false;
             AudioManager.fall.Play();
             transform.position = respawnLocation;
+
+            if(other.gameObject.CompareTag("Missile")){
+                // Play explosion sound
+
+                Destroy(other.gameObject);
+            }
+
             controller.enabled = true;
         }
 
@@ -350,15 +357,6 @@ public class MovePlayer : MonoBehaviour
         // Reassign respawn point (relevant to dungeons and death zones)
         else if(other.gameObject.CompareTag("Checkpoint")){
             respawnLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        }
-
-        // Missiles - still need to fine-tune
-        else if(other.gameObject.CompareTag("Missile")){
-            controller.enabled = false;
-            AudioManager.fall.Play();
-            transform.position = respawnLocation;
-            Destroy(other.gameObject);
-            controller.enabled = true;
         }
 
         // Locked doors
@@ -463,7 +461,7 @@ public class MovePlayer : MonoBehaviour
         }
 
         // Iron Shrine - Gear machines
-        else if(other.gameObject.CompareTag("GearSwitch") && (hasClockwiseGear || hasCounterGear)){
+        else if(other.gameObject.CompareTag("GearSwitch") && (hasClockwiseGear || hasCounterGear) && !other.gameObject.GetComponent<GearSwitch>().gear.activeSelf){
             // Big lock sound also sounds like slotting in a gear
             AudioManager.bigLock.Play();
             other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
@@ -474,14 +472,28 @@ public class MovePlayer : MonoBehaviour
                 hasCounterGear = false;
             }
         }
+
+        // To Waxwing Mountain
+
+        // Returning to plains from Waxwing Mountain
+
+        // To Windward Pools
+
+        // Returning to plains from Windward Pools
     }
 
     void OnTriggerStay(Collider other){
         // Staying in range of the gear switch
         if(other.gameObject.CompareTag("GearSwitch")){
-            interactText.text = "Left-click to interact with the gear switch.";
-            //if left click, change the gear state
-            if(true){
+            if(other.gameObject.GetComponent<GearSwitch>().gear.activeSelf){
+                interactText.text = "Left-click to interact with the gear switch.";
+            }
+            else {
+                interactText.text = "This machine appears to be missing a gear.";
+            }
+
+            // Temporary solution for now, check if something better eventually - pickup cooldown will reset at 2 when triggered
+            if(pickUpCooldown > 1.9f && other.gameObject.GetComponent<GearSwitch>().gear.activeSelf){
                 AudioManager.machine.Play();
                 other.gameObject.GetComponent<GearSwitch>().on = !other.gameObject.GetComponent<GearSwitch>().on;
             }
@@ -516,6 +528,7 @@ public class MovePlayer : MonoBehaviour
     void ExitDungeon(){
         keyText.text = "";
         specialText.text = "";
+        interactText.text = "";
         numKeys = 0;
         numBigKeys = 0;
         numFragments = 0;

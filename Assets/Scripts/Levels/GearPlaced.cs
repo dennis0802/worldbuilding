@@ -7,10 +7,10 @@ public class GearPlaced : MonoBehaviour {
     void Update()
     {
         if(gearMachine.GetComponent<GearSwitch>().on && gameObject.tag == "ClockwiseGear"){
-            transform.Rotate(new Vector3(15, 30, 0) * Time.deltaTime);
+            transform.Rotate(0.0f, 0.5f, 0.0f, Space.Self); 
         }
         else if(gearMachine.GetComponent<GearSwitch>().on && gameObject.tag == "CounterClockGear"){
-            transform.Rotate(new Vector3(-15, -30, 0) * Time.deltaTime);
+            transform.Rotate(0.0f, -0.5f, 0.0f, Space.Self); 
         }
     }
 }

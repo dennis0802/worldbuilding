@@ -7,7 +7,7 @@ public class IronSpindle : MonoBehaviour
     [SerializeField]
     public bool active = false;
     public Quaternion startRot;
-    public GameObject gearMachine, gear;
+    public GameObject gearMachine;
 
     void Start(){
         startRot = transform.rotation;
@@ -16,10 +16,10 @@ public class IronSpindle : MonoBehaviour
     void Update()
     {
         if(!PauseMenu.IsPaused){
-            if(active && gameObject.tag == "LowerSpindle" && gearMachine.GetComponent<GearSwitch>().on){
+            if(gameObject.tag == "LowerSpindle" && gearMachine.GetComponent<GearSwitch>().on){
                 transform.Rotate(0.0f, -0.1f, 0.0f, Space.Self); 
             }
-            else if(active && gameObject.tag == "UpperSpindle" && gearMachine.GetComponent<GearSwitch>().on){
+            else if(gameObject.tag == "UpperSpindle" && gearMachine.GetComponent<GearSwitch>().on){
                 transform.Rotate(0.0f, 0.1f, 0.0f, Space.Self); 
             }
             // Reset back to original rotation
