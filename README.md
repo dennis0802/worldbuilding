@@ -18,6 +18,7 @@ Assets used:
 * Normal Lock and Big Lock sound from https://mixkit.co/free-sound-effects/lock/
 * Unlock sound from https://mixkit.co/free-sound-effects/doors/ 
 * Machine sound from https://mixkit.co/free-sound-effects/robot/?page=2
+* Explosion sound from https://mixkit.co/free-sound-effects/explosion/
 
 All images used belong to their respective owners:
 * BG Images from Ori and the Blind Forest/Will of the Wisps
