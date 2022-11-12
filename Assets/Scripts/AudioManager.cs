@@ -7,9 +7,9 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
     public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrineTheme,
-                              bigLock, smallLock, machine, unlock;
+                              bigLock, smallLock, machine, unlock, explosion;
     public static AudioSource currentAudio = null;
-    private const int numAudio = 16;
+    private const int numAudio = 17;
     
     // Start is called before the first frame update
     void Start()
@@ -118,6 +118,7 @@ public class AudioManager : MonoBehaviour
         audioList[13].clip = (AudioClip)Resources.Load("Audio/smallLock");
         audioList[14].clip = (AudioClip)Resources.Load("Audio/unlock");
         audioList[15].clip = (AudioClip)Resources.Load("Audio/machine");
+        audioList[16].clip = (AudioClip)Resources.Load("Audio/explosion");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -139,6 +140,7 @@ public class AudioManager : MonoBehaviour
         smallLock = gameObject.GetComponents<AudioSource>()[13];
         unlock = gameObject.GetComponents<AudioSource>()[14];
         machine = gameObject.GetComponents<AudioSource>()[15];
+        explosion = gameObject.GetComponents<AudioSource>()[16];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;

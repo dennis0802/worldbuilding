@@ -296,8 +296,7 @@ public class MovePlayer : MonoBehaviour
             transform.position = respawnLocation;
 
             if(other.gameObject.CompareTag("Missile")){
-                // Play explosion sound
-
+                AudioManager.explosion.Play();
                 Destroy(other.gameObject);
             }
 

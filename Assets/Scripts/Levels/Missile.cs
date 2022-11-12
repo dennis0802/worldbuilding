@@ -47,7 +47,7 @@ public class Missile : MonoBehaviour
     void OnTriggerEnter(Collider col){
         // For this to work, the environment tagged objects (likely walls, doors, and etc.) need to be kinematic rigidbodies to register
         if(col.CompareTag("Environment")){
-            // Play explosion sound
+            AudioManager.explosion.Play();
             Debug.Log("Collided with " + col.gameObject);
             Destroy(gameObject);
         }
