@@ -5,17 +5,10 @@ using UnityEngine;
 public class Missile : MonoBehaviour 
 {
     public GameObject missileScanner;
-    private GameObject target;
+    private GameObject target = null;
     private Vector3 direction;
-    // speed was 20
-    private float speed = 1.0f, rotationSpeed = 4.0f, focusDistance = 5.0f;
-    private Vector3 lastPos;
+    private float speed = 10f, rotationSpeed = 4.0f, focusDistance = 4.0f;
     private bool lookingAtTarget = true;
-
-    void Start()
-    {
-        lastPos = transform.position;
-    }
 
     void Update()
     {
@@ -24,7 +17,6 @@ public class Missile : MonoBehaviour
 
         // Movement
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        lastPos = transform.position;
 
         // Rotation
         if(target != null){
@@ -44,12 +36,20 @@ public class Missile : MonoBehaviour
         }
     }
 
+    /* Solution retired, had resulted in early triggering of trigger
     void OnTriggerEnter(Collider col){
         // For this to work, the environment tagged objects (likely walls, doors, and etc.) need to be kinematic rigidbodies to register
         if(col.CompareTag("Environment")){
             AudioManager.explosion.Play();
-            Debug.Log("Collided with " + col.gameObject);
+            Debug.Log(gameObject + " collided with " + col.gameObject);
             Destroy(gameObject);
         }
+    }
+    */
+
+    // When colliding with anything, explode
+    void OnCollisionEnter(Collision other) {
+        AudioManager.explosion.Play();
+        Destroy(gameObject);
     }
 }

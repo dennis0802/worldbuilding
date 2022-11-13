@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour{
 
     public void Play(){
         AudioManager.buttonClick.Play();
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(7);
         Debug.Log("Projected finished date is Dec 31, 2024");
     }
 

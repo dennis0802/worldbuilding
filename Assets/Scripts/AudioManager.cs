@@ -7,9 +7,9 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioSource[] audioList;
     public static AudioSource buttonClick, bgm, jump, fall, forestBgm, complete, footstep, plainsTheme, towerTheme, ironMtTheme, breakSound, ironShrineTheme,
-                              bigLock, smallLock, machine, unlock, explosion;
+                              bigLock, smallLock, machine, unlock, explosion, gears;
     public static AudioSource currentAudio = null;
-    private const int numAudio = 17;
+    private const int numAudio = 18;
     
     // Start is called before the first frame update
     void Start()
@@ -58,6 +58,8 @@ public class AudioManager : MonoBehaviour
         else if(SceneManager.GetActiveScene().buildIndex == 9 && currentAudio != ironShrineTheme){
             currentAudio.Stop();
             ironShrineTheme.loop = true;
+            gears.loop = true;
+            gears.Play();
             currentAudio = ironShrineTheme;
             currentAudio.Play();
         }
@@ -69,6 +71,8 @@ public class AudioManager : MonoBehaviour
         // Buttefly Forest
         else if(SceneManager.GetActiveScene().buildIndex == 4 && currentAudio != forestBgm){
             currentAudio.Stop();
+            gears.loop = true;
+            gears.Play();
             forestBgm.loop = true;
             currentAudio = forestBgm;
             currentAudio.Play();
@@ -85,6 +89,12 @@ public class AudioManager : MonoBehaviour
         // Spirit Maple
 
         // Luma Pools
+
+        // Audio Effects
+        // Gears - should only play on Iron Shrine
+        if(SceneManager.GetActiveScene().buildIndex != 9 && gears.isPlaying){
+            gears.Stop();
+        }
     }
 
     // Prepare all audio to be used in the program
@@ -119,6 +129,7 @@ public class AudioManager : MonoBehaviour
         audioList[14].clip = (AudioClip)Resources.Load("Audio/unlock");
         audioList[15].clip = (AudioClip)Resources.Load("Audio/machine");
         audioList[16].clip = (AudioClip)Resources.Load("Audio/explosion");
+        audioList[17].clip = (AudioClip)Resources.Load("Audio/gears");
         
         for(int i = 0; i < audioList.Length; i++){
             gameObject.GetComponents<AudioSource>()[i] = audioList[i];
@@ -141,10 +152,15 @@ public class AudioManager : MonoBehaviour
         unlock = gameObject.GetComponents<AudioSource>()[14];
         machine = gameObject.GetComponents<AudioSource>()[15];
         explosion = gameObject.GetComponents<AudioSource>()[16];
+        gears = gameObject.GetComponents<AudioSource>()[17];
 
         // Any required adjustments to audio (volume, tone, etc.)
         jump.volume = 0.2f;
         complete.volume = 0.2f;
+        gears.volume = 0.4f;
+
+        explosion.spatialBlend = 1.0f;
+        explosion.rolloffMode = AudioRolloffMode.Logarithmic;
     }
 
     public void StopAudio(){

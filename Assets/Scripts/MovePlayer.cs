@@ -281,7 +281,7 @@ public class MovePlayer : MonoBehaviour
         // Exiting Iron Shrine via completion
         else if(other.gameObject.CompareTag("IronComplete")){
             controller.enabled = false;
-            transform.position = new Vector3(-553, 125.5f, -191);
+            transform.position = new Vector3(-399, 4, -343);
             controller.enabled = true;
             ironShrineDone = true;
             AudioManager.complete.Play();
@@ -294,12 +294,6 @@ public class MovePlayer : MonoBehaviour
             controller.enabled = false;
             AudioManager.fall.Play();
             transform.position = respawnLocation;
-
-            if(other.gameObject.CompareTag("Missile")){
-                AudioManager.explosion.Play();
-                Destroy(other.gameObject);
-            }
-
             controller.enabled = true;
         }
 
