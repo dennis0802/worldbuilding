@@ -284,6 +284,7 @@ public class MovePlayer : MonoBehaviour
             transform.position = new Vector3(-399, 4, -343);
             controller.enabled = true;
             ironShrineDone = true;
+            ExitDungeon();
             AudioManager.complete.Play();
             SceneManager.LoadScene(7);
         }      
@@ -458,11 +459,13 @@ public class MovePlayer : MonoBehaviour
             // Big lock sound also sounds like slotting in a gear
             AudioManager.bigLock.Play();
             other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
-            if(hasClockwiseGear){
+            if(hasClockwiseGear && other.gameObject.GetComponent<GearSwitch>().clockwise){
                 hasClockwiseGear = false;
+                specialText.text = "";
             }
-            else{
+            else if(hasCounterGear && !other.gameObject.GetComponent<GearSwitch>().clockwise){
                 hasCounterGear = false;
+                specialText.text = "";
             }
         }
 
@@ -483,6 +486,10 @@ public class MovePlayer : MonoBehaviour
             }
             else {
                 interactText.text = "This machine appears to be missing a gear.";
+                // Mismatching clockwise gear
+                if(hasClockwiseGear && !other.gameObject.GetComponent<GearSwitch>().clockwise){
+                    interactText.text = interactText.text + " The clockwise gear doesn't fit in this machine.";
+                }
             }
 
             // Temporary solution for now, check if something better eventually - pickup cooldown will reset at 2 when triggered
