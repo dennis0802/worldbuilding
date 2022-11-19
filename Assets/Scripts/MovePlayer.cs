@@ -291,11 +291,8 @@ public class MovePlayer : MonoBehaviour
 
         // Contacting a death zone (relevant to shrines/dungeons)
         else if(other.gameObject.CompareTag("DeathZone") || other.gameObject.CompareTag("LaserX") || other.gameObject.CompareTag("LaserY") || 
-                other.gameObject.CompareTag("LaserZ") || other.gameObject.CompareTag("Missile")){
-            controller.enabled = false;
-            AudioManager.fall.Play();
-            transform.position = respawnLocation;
-            controller.enabled = true;
+                other.gameObject.CompareTag("LaserZ")){
+            Die();
         }
 
         // Key collectables
@@ -457,14 +454,16 @@ public class MovePlayer : MonoBehaviour
         // Iron Shrine - Gear machines
         else if(other.gameObject.CompareTag("GearSwitch") && (hasClockwiseGear || hasCounterGear) && !other.gameObject.GetComponent<GearSwitch>().gear.activeSelf){
             // Big lock sound also sounds like slotting in a gear
-            AudioManager.bigLock.Play();
-            other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
             if(hasClockwiseGear && other.gameObject.GetComponent<GearSwitch>().clockwise){
                 hasClockwiseGear = false;
+                AudioManager.bigLock.Play();
+                other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
                 specialText.text = "";
             }
             else if(hasCounterGear && !other.gameObject.GetComponent<GearSwitch>().clockwise){
                 hasCounterGear = false;
+                AudioManager.bigLock.Play();
+                other.gameObject.GetComponent<GearSwitch>().gear.SetActive(true);
                 specialText.text = "";
             }
         }
@@ -593,5 +592,12 @@ public class MovePlayer : MonoBehaviour
             forceDirection.Normalize();
             r.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
         }
+    }
+
+    public void Die(){
+        controller.enabled = false;
+        AudioManager.fall.Play();
+        transform.position = respawnLocation;
+        controller.enabled = true;
     }
 }

@@ -50,6 +50,9 @@ public class Missile : MonoBehaviour
     // When colliding with anything, explode
     void OnCollisionEnter(Collision other) {
         AudioManager.explosion.Play();
+        if(other.gameObject.CompareTag("Player")){
+            other.gameObject.GetComponent<MovePlayer>().Die();
+        }
         Destroy(gameObject);
     }
 }

@@ -12,11 +12,11 @@ public class MainMenu : MonoBehaviour{
     // 2 = splash screen
     // 3 = start off at the Spirit Maple (currently Fettuccine Plains)
     // 4 = debug
-    // 9 = current development focus (Iron Shrine)
+    // 10 = current development focus (Waxwing Mountain)
 
     public void Play(){
         AudioManager.buttonClick.Play();
-        SceneManager.LoadScene(7);
+        SceneManager.LoadScene(3);
         Debug.Log("Projected finished date is Dec 31, 2024");
     }
 
