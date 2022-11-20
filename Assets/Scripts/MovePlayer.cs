@@ -156,7 +156,7 @@ public class MovePlayer : MonoBehaviour
             AudioManager.complete.Play();
             controller.enabled = true;
         }
-        // Going from Chio Plains to Witcher's Tower
+        // Going from Fettuccine Plains to Witcher's Tower
         else if(other.gameObject.CompareTag("PlainsToTower")){
             controller.enabled = false;
             transform.position = new Vector3(75,0,30);
@@ -166,7 +166,7 @@ public class MovePlayer : MonoBehaviour
             SceneManager.LoadScene(5);
         }
 
-        // Going from Witcher's Tower to Chio Plains
+        // Going from Witcher's Tower to Fettuccine Plains
         else if(other.gameObject.CompareTag("TowerToPlains")){
             controller.enabled = false;
             transform.position = new Vector3(29,0,-239);
@@ -469,8 +469,20 @@ public class MovePlayer : MonoBehaviour
         }
 
         // To Waxwing Mountain
+        else if(other.gameObject.CompareTag("PlainsToWaxwing")){
+            controller.enabled = false;
+            transform.position = new Vector3(166, 3, -191);
+            controller.enabled = true;
+            SceneManager.LoadScene(10);
+        }
 
         // Returning to plains from Waxwing Mountain
+        else if(other.gameObject.CompareTag("WaxwingToPlains")){
+            controller.enabled = false;
+            transform.position = new Vector3(159, 4, -228);
+            controller.enabled = true;
+            SceneManager.LoadScene(3);
+        }
 
         // To Windward Pools
 

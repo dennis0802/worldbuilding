@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
             currentAudio.Play();
         }
         // Plains themes - Fettuccine Plains, Waxwing Mountain, and Maillo Shores
-        else if(SceneManager.GetActiveScene().buildIndex == 3 && currentAudio != plainsTheme){
+        else if((SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 10)&& currentAudio != plainsTheme){
             currentAudio.Stop();
             plainsTheme.loop = true;
             plainsTheme.volume = 0.4f;
@@ -63,8 +63,6 @@ public class AudioManager : MonoBehaviour
             currentAudio = ironShrineTheme;
             currentAudio.Play();
         }
-
-        // Waxwing Mountain
 
         // Windward Pools
 

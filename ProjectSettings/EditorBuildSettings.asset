@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Core/Shrines/IronShrine.unity
     guid: 0af004e80821d24428a8694cb47a5eb1
+  - enabled: 1
+    path: Assets/Scenes/Core/Shrines/WaxwingGrove.unity
+    guid: 4046b7423e8017a49aa972bd164511c3
   m_configObjects: {}

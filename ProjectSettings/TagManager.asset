@@ -54,6 +54,8 @@ TagManager:
   - GearSwitch
   - UpperSpindle
   - LowerSpindle
+  - PlainsToWaxwing
+  - WaxwingToPlains
   layers:
   - Default
   - TransparentFX
