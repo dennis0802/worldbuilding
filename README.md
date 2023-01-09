@@ -20,6 +20,7 @@ Assets used:
 * Machine sound from https://mixkit.co/free-sound-effects/robot/?page=2
 * Explosion sound from https://mixkit.co/free-sound-effects/explosion/
 * Gears sound from https://pixabay.com/sound-effects/search/gear
+* Universal Resource Pipeline (URP) Water system from Unity's Boat Attack (https://github.com/Unity-Technologies/BoatAttack)
 
 All images used belong to their respective owners:
 * BG Images from Ori and the Blind Forest/Will of the Wisps
